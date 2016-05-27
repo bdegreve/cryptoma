@@ -1,0 +1,41 @@
+{
+  "name": "static-react-bootstrap",
+  "version": "0.0.0",
+  "description": "starterkit to make staticly generated websites using React and Bootstrap",
+  "main": "webpack.config.js",
+  "scripts": {
+    "webpack": "webpack --progress --colors",
+    "dev": "webpack-dev-server --progress --colors",
+    "start": "npm run dev",
+    "test": "standard"
+  },
+  "author": "Bram de Greve <bram.degreve@bramz.net",
+  "license": "UNLICENSED",
+  "private": true,
+  "standard": {
+    "parser": "babel-eslint"
+  },
+  "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-eslint": "^6.0.4",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-react": "^6.5.0",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
+    "less": "^2.7.1",
+    "less-loader": "^2.2.3",
+    "standard": "^7.1.1",
+    "standard-loader": "^4.0.0",
+    "static-site-generator-webpack-plugin": "^2.1.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "react": "^15.1.0",
+    "react-bootstrap": "^0.29.4",
+    "react-dom": "^15.1.0"
+  }
+}
