@@ -9,7 +9,7 @@
     "start": "npm run dev",
     "test": "standard"
   },
-  "author": "Bram de Greve <bram.degreve@bramz.net",
+  "author": "Bram de Greve <bram.degreve@bramz.net>",
   "license": "UNLICENSED",
   "private": true,
   "standard": {
