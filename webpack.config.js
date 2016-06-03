@@ -24,9 +24,7 @@ module.exports = {
         test: /\.jsx?$/,
         loader: 'babel',
         exclude: /(node_modules|bower_components)/,
-        query: {
-          // see .babelrc
-        }
+        query: {} // see .babelrc
       },
       {
         test: /\.less$/,
