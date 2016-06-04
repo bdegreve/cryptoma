@@ -11,3 +11,4 @@ npm start
 
 See also:
 - http://jxnblk.com/writing/posts/static-site-generation-with-react-and-webpack/
+- https://css-tricks.com/css-modules-part-3-react/

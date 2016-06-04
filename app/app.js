@@ -3,6 +3,8 @@ import ReactDOMServer from 'react-dom/server'
 
 import Body from 'components/body'
 
+import './app.less'
+
 export default (locals, callback) => {
   const html = ReactDOMServer.renderToString(
     <Body title='static bootsrap website bootstrap'>

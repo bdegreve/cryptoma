@@ -1,4 +1,5 @@
 var path = require('path')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin')
 
 module.exports = {
@@ -28,7 +29,7 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        loader: 'style!css!less'
+        loader: ExtractTextPlugin.extract('style', 'css!less')
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
@@ -53,6 +54,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new ExtractTextPlugin('styles.css'),
     new StaticSiteGeneratorPlugin('main', ['/'])
   ],
   resolve: {

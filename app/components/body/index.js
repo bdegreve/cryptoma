@@ -9,6 +9,7 @@ export default React.createClass({
           <meta charSet='utf-8' />
           <meta name='viewport' content='width=device-with, initial-scale=1' />
           <title>{this.props.title}</title>
+          <link rel='stylesheet' href='styles.css' />
         </head>
         <body>
           {this.props.children}
