@@ -3,12 +3,14 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin')
 
 module.exports = {
-  entry: [
-    './app/app.js'
-  ],
+  entry: {
+    main: [
+      './app/app.js'
+    ]
+  },
   output: {
     path: path.resolve('dist'),
-    filename: 'bundle.js',
+    filename: '[name]-[hash].js',
     libraryTarget: 'umd'
   },
   devtool: '#source-map',
@@ -54,7 +56,7 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('styles.css'),
+    new ExtractTextPlugin('[name]-[hash].css'),
     new StaticSiteGeneratorPlugin('main', ['/'])
   ],
   resolve: {
