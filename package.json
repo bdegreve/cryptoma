@@ -4,16 +4,21 @@
   "description": "starterkit to make staticly generated websites using React and Bootstrap",
   "main": "webpack.config.js",
   "scripts": {
-    "webpack": "webpack --progress --colors",
-    "dev": "webpack-dev-server --progress --colors",
+    "install": "npm run webpack",
     "start": "npm run dev",
-    "test": "standard"
+    "test": "standard",
+    "webpack": "webpack --progress --colors",
+    "dev": "webpack-dev-server --progress --colors"
   },
   "author": "Bram de Greve <bram.degreve@bramz.net>",
   "license": "UNLICENSED",
   "private": true,
   "standard": {
     "parser": "babel-eslint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://git.chateau.bramz.net/Bramz/static-react-bootstrap.git"
   },
   "devDependencies": {
     "babel": "^6.5.2",

@@ -13,11 +13,17 @@ Node.js (v4.x LTS recommended) and NPM (v3.x recommended).
 
 ## Getting started
 
-1. `npm install` to install all depedencies.
-2. `npm start` to run a live development server at http://localhost:8080
-3. `npm run webpack` to finally build all distributables in `dist/`
+To install all dependencies and build your static website, run this single command:
 
-And `npm test` to test your codestyle.
+```
+npm install
+```
+
+That's it! Your static website can be found in `dist/`, ready to be deployed.
+
+Other commands:
+- `npm start`: run a live development server at http://localhost:8080, usefull while developing your website.
+- `npm test`: run some tests (just your codestyle for now)
 
 ## References
 - http://jxnblk.com/writing/posts/static-site-generation-with-react-and-webpack/
