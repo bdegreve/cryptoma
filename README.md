@@ -28,3 +28,4 @@ Other commands:
 ## References
 - http://jxnblk.com/writing/posts/static-site-generation-with-react-and-webpack/
 - https://css-tricks.com/css-modules-part-3-react/
+- http://jeffhandley.github.io/QuickReactions/20-final-cleanup.html
