@@ -57,7 +57,7 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('[name]-[hash].css'),
-    new StaticSiteGeneratorPlugin('main', ['/'])
+    new StaticSiteGeneratorPlugin('main', ['/', '/about'])
   ],
   resolve: {
     root: path.resolve('./app'),
