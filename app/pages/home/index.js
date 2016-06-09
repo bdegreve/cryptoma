@@ -1,14 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router'
 
+import Grid from 'react-bootstrap/lib/grid'
+
 export default () => (
   <main>
-    <header>
-      <h1>Home page</h1>
+    <header className='jumbotron'>
+      <div className='container'>
+        <h1>Hello world!</h1>
+        <p>A starter kit for staticly generated websites, using React and
+        Bootstrap</p>
+      </div>
     </header>
-    <p>Hello world!</p>
     <footer>
-      <Link to='/about'>about</Link>
+      <Grid>
+        <Link to='/about'>about</Link>
+      </Grid>
     </footer>
   </main>
 )
