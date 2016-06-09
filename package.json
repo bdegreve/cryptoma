@@ -7,7 +7,7 @@
     "install": "npm run webpack",
     "start": "npm run dev",
     "test": "standard",
-    "webpack": "npm run clean && webpack --progress --colors",
+    "webpack": "npm run clean && webpack -p --progress --colors",
     "dev": "webpack-dev-server --progress --colors",
     "clean": "rimraf dist/*"
   },
