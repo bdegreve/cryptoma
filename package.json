@@ -7,8 +7,9 @@
     "install": "npm run webpack",
     "start": "npm run dev",
     "test": "standard",
-    "webpack": "webpack --progress --colors",
-    "dev": "webpack-dev-server --progress --colors"
+    "webpack": "npm run clean && webpack --progress --colors",
+    "dev": "webpack-dev-server --progress --colors",
+    "clean": "rimraf dist/*"
   },
   "author": "Bram de Greve <bram.degreve@bramz.net>",
   "license": "UNLICENSED",
@@ -44,6 +45,7 @@
     "bootstrap": "^3.3.6",
     "react": "^15.1.0",
     "react-bootstrap": "^0.29.4",
-    "react-dom": "^15.1.0"
+    "react-dom": "^15.1.0",
+    "rimraf": "^2.5.2"
   }
 }
