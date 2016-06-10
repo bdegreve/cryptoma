@@ -7,13 +7,7 @@ import MenuItem from 'react-bootstrap/lib/MenuItem'
 
 import AppBar from 'components/navbar'
 
-const style = {
-  position: 'fixed',
-  top: '51px',
-  bottom: '0px',
-  left: '0px',
-  right: '0px'
-}
+import style from './style.less'
 
 export default ({children}) => (
   <div>
@@ -30,7 +24,7 @@ export default ({children}) => (
       <NavItem pullRight eventKey={1}>Action Right</NavItem>
       <li pullRight><Link to='about'>About</Link></li>
     </AppBar>
-    <div style={style}>
+    <div className={style.main}>
       {children}
     </div>
   </div>

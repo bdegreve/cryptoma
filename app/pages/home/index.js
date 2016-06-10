@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router'
 
-import Grid from 'react-bootstrap/lib/grid'
+import Grid from 'react-bootstrap/lib/Grid'
 
 export default () => (
   <main>
