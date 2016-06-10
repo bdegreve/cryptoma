@@ -8,7 +8,7 @@
     "start": "npm run dev",
     "test": "standard",
     "webpack": "npm run clean && webpack -p --progress --colors",
-    "dev": "webpack-dev-server --progress --colors",
+    "dev": "webpack-dev-server --progress --colors --history-api-fallback",
     "clean": "rimraf dist/*"
   },
   "author": "Bram de Greve <bram.degreve@bramz.net>",
