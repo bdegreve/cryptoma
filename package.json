@@ -48,5 +48,8 @@
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1",
     "rimraf": "^2.5.2"
+  },
+  "optionalDependencies": {
+    "esrever": "^0.2.0"
   }
 }

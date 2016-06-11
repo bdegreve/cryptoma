@@ -12,7 +12,7 @@ import style from './style.less'
 export default ({children}) => (
   <div>
     <AppBar brand='Static-React-Bootstrap'>
-      <NavItem eventKey={1}>Action</NavItem>
+      <li><Link to='crypto'>Crypto</Link></li>
       <NavItem eventKey={2}>Action</NavItem>
       <NavDropdown eventKey={3} title='Dropdown' id='basic-nav-dropdown'>
         <MenuItem eventKey={3.1}>Action</MenuItem>
