@@ -4,7 +4,6 @@ import ReactDOMServer from 'react-dom/server'
 import { Router, RouterContext, browserHistory, match, createMemoryHistory } from 'react-router'
 
 import routes from './routes'
-import './app.less'
 
 if (typeof document !== 'undefined') {
   match({routes, history: browserHistory}, (_, redirectLocation, renderProps) => {
