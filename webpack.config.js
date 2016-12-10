@@ -11,7 +11,7 @@ var HASH = !DEBUG ? '-[hash]' : ''
 var CHUNKHASH = !DEBUG ? '-[chunkhash]' : ''
 
 var plugins = [
-  new ExtractTextPlugin('[name]-[hash].css'),
+  new ExtractTextPlugin(util.format('[name]%s.css', HASH)),
   new StaticSiteGeneratorPlugin('main', ['/', '/about', '/crypto'])
 ]
 if (!DEBUG) {
