@@ -42,7 +42,7 @@
     "react": "15.4.1",
     "react-bootstrap": "0.30.7",
     "react-dom": "15.4.1",
-    "react-router": "3.0.0",
+    "react-router": "4.0.0-alpha.6",
     "rimraf": "2.5.4",
     "standard": "8.6.0",
     "standard-loader": "5.0.0",

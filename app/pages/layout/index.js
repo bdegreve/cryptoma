@@ -12,7 +12,7 @@ import style from './style.less'
 export default ({children}) => (
   <div>
     <AppBar brand='Static-React-Bootstrap'>
-      <li><Link to='crypto'>Crypto</Link></li>
+      <NavLink to='/crypto'>Crypto</NavLink>
       <NavItem eventKey={2}>Action</NavItem>
       <NavDropdown eventKey={3} title='Dropdown' id='basic-nav-dropdown'>
         <MenuItem eventKey={3.1}>Action</MenuItem>
@@ -22,10 +22,17 @@ export default ({children}) => (
         <MenuItem eventKey={3.3}>Separated link</MenuItem>
       </NavDropdown>
       <NavItem pullRight eventKey={1}>Action Right</NavItem>
-      <li pullRight><Link to='about'>About</Link></li>
+      <NavLink pullRight to='/about'>About</NavLink>
     </AppBar>
     <div className={style.main}>
       {children}
     </div>
   </div>
 )
+
+const NavLink = ({to, ...rest}) =>
+  <Link to={to}>
+    {({isActive, href, onClick}) =>
+      <NavItem active={isActive} href={href} onClick={onClick} {...rest} />
+    }
+  </Link>
