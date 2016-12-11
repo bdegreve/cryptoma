@@ -1196,7 +1196,7 @@
     },
     "express": {
       "version": "4.14.0",
-      "from": "express@>=4.13.3 <5.0.0",
+      "from": "https://registry.npmjs.org/express/-/express-4.14.0.tgz",
       "resolved": "https://registry.npmjs.org/express/-/express-4.14.0.tgz",
       "dependencies": {
         "debug": {
@@ -1280,7 +1280,7 @@
       "dependencies": {
         "debug": {
           "version": "2.2.0",
-          "from": "debug@>=2.2.0 <2.3.0",
+          "from": "debug@~2.2.0",
           "resolved": "https://registry.npmjs.org/debug/-/debug-2.2.0.tgz"
         },
         "ms": {
@@ -2609,7 +2609,7 @@
       "dependencies": {
         "debug": {
           "version": "2.2.0",
-          "from": "debug@>=2.2.0 <2.3.0",
+          "from": "debug@~2.2.0",
           "resolved": "https://registry.npmjs.org/debug/-/debug-2.2.0.tgz"
         },
         "ms": {
@@ -3168,7 +3168,7 @@
     },
     "webpack-dev-middleware": {
       "version": "1.8.4",
-      "from": "webpack-dev-middleware@>=1.4.0 <2.0.0",
+      "from": "https://registry.npmjs.org/webpack-dev-middleware/-/webpack-dev-middleware-1.8.4.tgz",
       "resolved": "https://registry.npmjs.org/webpack-dev-middleware/-/webpack-dev-middleware-1.8.4.tgz"
     },
     "webpack-dev-server": {

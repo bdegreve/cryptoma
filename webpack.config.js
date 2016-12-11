@@ -36,6 +36,7 @@ module.exports = {
   },
   output: {
     path: path.resolve('dist'),
+    publicPath: '/',
     filename: util.format('[name]%s.js', CHUNKHASH),
     libraryTarget: 'umd',
     pathinfo: !!DEBUG
