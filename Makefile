@@ -17,12 +17,11 @@ run: node_modules
 
 dist: node_modules webpack.config.js .babelrc $(SOURCES)
 
-node_modules: package.json npm-shrinkwrap.json
-	npm install
+node_modules: package.json yarn.lock
+	yarn install
 
 clean:
 	${RMRF} dist
-	npm prune
 
 distclean:
 	${RMRF} node_modules
