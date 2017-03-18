@@ -1,7 +1,7 @@
 {
-  "name": "static-react-bootstrap",
-  "version": "0.0.0",
-  "description": "starterkit to make staticly generated websites using React and Bootstrap",
+  "name": "cryptoma",
+  "version": "2.0.0",
+  "description": "crypto tool",
   "main": "webpack.config.js",
   "scripts": {
     "install": "npm run webpack",
