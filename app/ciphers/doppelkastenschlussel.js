@@ -4,6 +4,8 @@ import TextBox from 'components/text-box'
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 
 export default {
+  name: 'Doppelkastenschlüssel',
+
   key: {
     key1: 'HAMBURG',
     key2: 'NEWYORK',

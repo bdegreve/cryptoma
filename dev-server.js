@@ -1,13 +1,17 @@
-var express = require('express')
-var webpack = require('webpack')
-var webpackDevMiddleware = require('webpack-dev-middleware')
+const express = require('express')
+const webpack = require('webpack')
+const webpackDevMiddleware = require('webpack-dev-middleware')
+const historyApiFallback = require('connect-history-api-fallback')
 
-var config = require('./webpack.config')
+const config = require('./webpack.config')
 
-var app = express()
+const app = express()
 app.set('port', (process.env.PORT || 8080))
 
-var compiler = webpack(config)
+const compiler = webpack(config)
+
+app.use(historyApiFallback())
+
 app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
   quiet: false,
@@ -15,6 +19,7 @@ app.use(webpackDevMiddleware(compiler, {
     colors: true
   }
 }))
+
 
 app.listen(app.get('port'), '0.0.0.0', function () {
   console.log('Listening at http://0.0.0.0:' + app.get('port'))

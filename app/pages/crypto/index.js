@@ -3,7 +3,6 @@ import React from 'react'
 import Grid from 'react-bootstrap/lib/Grid'
 
 import TextBox from 'components/text-box'
-import DropDown from 'components/drop-down'
 
 import CIPHERS from 'ciphers'
 
@@ -20,8 +19,7 @@ export default React.createClass({
     return {
       text: 'The quick brown fox jumps over the lazy dog',
       key,
-      mode: ENCRYPT,
-      cipher: 'ptaal'
+      mode: ENCRYPT
     }
   },
 
@@ -44,35 +42,49 @@ export default React.createClass({
   },
 
   _onKey (value) {
-    this.setState(({key, cipher}) => Object.assign(key, {
-      [cipher]: value
-    }))
+    this.setState(({key}, {match}) => {
+      const { cipher } = match.params
+      if (!cipher) {
+        return
+      }
+      return {
+        ...key,
+        [cipher]: value
+      }
+    })
   },
 
   _encrypt (text) {
-    const { cipher, key } = this.state
+    const { cipher } = this.props.match.params
+    const { key } = this.state
     return CIPHERS[cipher]
       ? CIPHERS[cipher].encrypt(text, key[cipher])
       : ''
   },
 
   _decrypt (text) {
-    const { cipher, key } = this.state
+    const { cipher } = this.props.match.params
+    const { key } = this.state
     return CIPHERS[cipher]
       ? CIPHERS[cipher].decrypt(text, key[cipher])
       : ''
   },
 
   render () {
-    const {text, mode, key, cipher} = this.state
-    const { Settings } = CIPHERS[cipher]
+    const { cipher } = this.props.match.params
+    if (!CIPHERS[cipher]) {
+      return <p>{cipher} not found</p>
+    }
+
+    const {text, mode, key} = this.state
+    const { name, Settings } = CIPHERS[cipher]
     const plaintext = mode === ENCRYPT ? text : this._decrypt(text)
     const ciphertext = mode === DECRYPT ? text : this._encrypt(text)
 
     return (
       <Grid componentClass='main'>
         <header>
-          <h1>Crypto</h1>
+          <h1>{name || cipher}</h1>
           <p>Type in your plaintext or ciphertext ...</p>
         </header>
         <form>
@@ -83,12 +95,6 @@ export default React.createClass({
             value={plaintext}
             onChange={this._onEncrypt}
             controlId='crypto-plaintext'
-          />
-          <DropDown
-            label='Cipher'
-            value={this.state.cipher}
-            onChange={cipher => this.setState({cipher})}
-            options={Object.keys(CIPHERS)}
           />
           { Settings
             ? <Settings value={key[cipher]} onChange={this._onKey} plaintext={plaintext} />

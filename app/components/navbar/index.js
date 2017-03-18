@@ -5,7 +5,7 @@ import Navbar from 'react-bootstrap/lib/Navbar'
 
 export default ({brand, children}) => {
   return (
-    <Navbar inverse fixedTop>
+    <Navbar inverse fixedTop collapseOnSelect>
       <Navbar.Header>
         <Navbar.Brand>
           <Link to='/'>{brand}</Link>

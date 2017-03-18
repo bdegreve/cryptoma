@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactDOMServer from 'react-dom/server'
-import { Route, BrowserRouter, StaticRouter } from 'react-router-dom'
+import { Route, Switch, BrowserRouter, StaticRouter } from 'react-router-dom'
 
 import Layout from 'pages/layout'
 import Home from 'pages/home'
@@ -10,9 +10,11 @@ import Crypto from 'pages/crypto'
 
 const App = () =>
   <Layout>
-    <Route exactly path='/' component={Home} />
-    <Route path='/about' component={About} />
-    <Route path='/crypto' component={Crypto} />
+    <Switch>
+      <Route exact path='/' component={Home} />
+      <Route path='/about' component={About} />
+      <Route path='/:cipher' component={Crypto} />
+    </Switch>
   </Layout>
 
 if (typeof document !== 'undefined') {

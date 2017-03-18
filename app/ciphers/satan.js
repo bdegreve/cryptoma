@@ -1,6 +1,8 @@
 import shuffle from 'lib/shuffle'
 
 export default {
+  name: 'Satan-taal',
+
   encrypt: (plaintext) =>
     plaintext.replace(/(\w+)/g, (_, word) => {
       if (word.length < 4) {

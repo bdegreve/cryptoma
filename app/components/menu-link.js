@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
-import NavItem from 'react-bootstrap/lib/NavItem'
+import MenuItem from 'react-bootstrap/lib/MenuItem'
 
 export default ({to, exact, strict, active, ...rest}) =>
   <Route
@@ -9,7 +9,7 @@ export default ({to, exact, strict, active, ...rest}) =>
     strict={strict}
   >
     {({match, history}) =>
-      <NavItem
+      <MenuItem
         href={to}
         active={!!match}
         onClick={ev => {
