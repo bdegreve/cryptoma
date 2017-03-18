@@ -1,5 +1,4 @@
 import React from 'react'
-import {Link} from 'react-router'
 
 import Nav from 'react-bootstrap/lib/Nav'
 import NavItem from 'react-bootstrap/lib/NavItem'
@@ -7,6 +6,7 @@ import NavDropdown from 'react-bootstrap/lib/NavDropdown'
 import MenuItem from 'react-bootstrap/lib/MenuItem'
 
 import AppBar from 'components/navbar'
+import NavLink from 'components/nav-link'
 
 import style from './style.less'
 
@@ -34,10 +34,3 @@ export default ({children}) => (
     </div>
   </div>
 )
-
-const NavLink = ({to, ...rest}) =>
-  <Link to={to}>
-    {({isActive, href, onClick}) =>
-      <NavItem active={isActive} href={href} onClick={onClick} {...rest} />
-    }
-  </Link>

@@ -13,12 +13,15 @@ SOURCES = $(call rwildcard, $(SRCDIR), *.js *.json *.css *.less *.svg)
 all: dist
 
 run: node_modules
-	npm run start
+	npm start
 
 dist: node_modules webpack.config.js .babelrc $(SOURCES)
 
 node_modules: package.json yarn.lock
 	yarn install
+
+check:
+	npm test
 
 clean:
 	${RMRF} dist

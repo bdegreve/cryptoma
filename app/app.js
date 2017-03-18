@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactDOMServer from 'react-dom/server'
-import { Match, BrowserRouter, ServerRouter, createServerRenderContext } from 'react-router'
+import { Route, BrowserRouter, StaticRouter } from 'react-router-dom'
 
 import Layout from 'pages/layout'
 import Home from 'pages/home'
@@ -10,9 +10,9 @@ import Crypto from 'pages/crypto'
 
 const App = () =>
   <Layout>
-    <Match exactly pattern='/' component={Home} />
-    <Match pattern='/about' component={About} />
-    <Match pattern='/crypto' component={Crypto} />
+    <Route exactly path='/' component={Home} />
+    <Route path='/about' component={About} />
+    <Route path='/crypto' component={Crypto} />
   </Layout>
 
 if (typeof document !== 'undefined') {
@@ -30,11 +30,11 @@ export default (locals, callback) => {
   const scripts = assets.filter((asset) => /\.jsx?$/.test(asset))
   const stylesheets = assets.filter((asset) => /\.css$/.test(asset))
 
-  const context = createServerRenderContext()
+  const context = {}
   const content = ReactDOMServer.renderToString(
-    <ServerRouter location={locals.path} context={context}>
+    <StaticRouter location={locals.path} context={context}>
       <App />
-    </ServerRouter>
+    </StaticRouter>
   )
 
   const title = 'static bootsrap website bootstrap'

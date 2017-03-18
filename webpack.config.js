@@ -1,32 +1,65 @@
-var path = require('path')
-var util = require('util')
+const path = require('path')
+const webpack = require('webpack')
+const autoprefixer = require('autoprefixer')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin')
 
-var webpack = require('webpack')
-var autoprefixer = require('autoprefixer')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin')
+const DEBUG = process.env.NODE_ENV !== 'production'
+const HASH = !DEBUG ? '-[hash]' : ''
+const CHUNKHASH = !DEBUG ? '-[chunkhash]' : ''
 
-var DEBUG = process.env.NODE_ENV !== 'production'
-var HASH = !DEBUG ? '-[hash]' : ''
-var CHUNKHASH = !DEBUG ? '-[chunkhash]' : ''
-
-var plugins = [
-  new ExtractTextPlugin(util.format('[name]%s.css', HASH)),
+const plugins = [
+  new webpack.LoaderOptionsPlugin({
+    debug: !!DEBUG,
+    minimize: !DEBUG
+  }),
+  new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+  }),
+  new ExtractTextPlugin(`[name]${CHUNKHASH}.css`),
   new StaticSiteGeneratorPlugin('main', ['/', '/about', '/crypto'])
 ]
 if (!DEBUG) {
-  plugins.push(new webpack.DefinePlugin({
-    'process.env.NODE_ENV': '"production"'
-  }))
-  plugins.push(new webpack.optimize.UglifyJsPlugin({
-    compress: {
-      warnings: false // too many warnings are worse than none.
-    }
-  }))
-  plugins.push(new webpack.optimize.OccurrenceOrderPlugin())
+  plugins.push(
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true,
+      compress: {
+        warnings: false // too many warnings are worse than none.
+      }
+    })
+  )
 }
 
+const cssLoaders = [
+  {
+    loader: 'css-loader',
+    options: {
+      // don't localize names by default, otherwise bootstrap get
+      // localized too. Instead explicitly :local(...) what needs to be.
+      // ?importLoaders=1 seems not required for now.
+      // https://css-tricks.com/css-modules-part-3-react/
+      // https://github.com/css-modules/css-modules
+      modules: false,
+      localIdentName: '[local]_[hash:base64:5]'
+    }
+  },
+  {
+    loader: 'postcss-loader',
+    options: {
+      plugins: () => [
+        autoprefixer({
+          browsers: [
+            'last 3 versions',
+            '> 1%'
+          ]
+        })
+      ]
+    }
+  }
+]
+
 module.exports = {
+  context: __dirname,
   entry: {
     main: [
       'babel-polyfill',
@@ -35,57 +68,65 @@ module.exports = {
     ]
   },
   output: {
-    path: path.resolve('dist'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
-    filename: util.format('[name]%s.js', CHUNKHASH),
+    filename: `[name]${CHUNKHASH}.js`,
     libraryTarget: 'umd',
     pathinfo: !!DEBUG
   },
-  devtool: DEBUG ? '#eval-source-map' : '#source-map',
+  devtool: DEBUG ? 'cheap-eval-source-map' : 'source-map',
   module: {
-    preLoaders: [
+    rules: [
       {
         test: /\.jsx?$/,
-        loader: 'standard',
-        exclude: /(node_modules|bower_components)/
-      }
-    ],
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loader: 'babel',
         exclude: /(node_modules|bower_components)/,
-        query: {} // see .babelrc
+        enforce: 'pre',
+        use: 'standard-loader'
+      },
+      {
+        test: /\.jsx?$/,
+        exclude: /(node_modules|bower_components)/,
+        use: 'babel-loader' // see .babelrc
       },
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', 'css?localIdentName=[local]-[hash:base64:5]!postcss')
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: cssLoaders
+        })
       },
       {
         test: /\.less$/,
-        loader: ExtractTextPlugin.extract('style', 'css?localIdentName=[local]-[hash:base64:5]!postcss!less')
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            ...cssLoaders,
+            {
+              loader: 'less-loader'
+            }
+          ]
+        })
       },
       {
         test: /\.(png|jpg|jpeg|eot|woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        loader: util.format('file?name=[name]%s.[ext]', HASH)
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: `[name]${HASH}.[ext]`
+            }
+          }
+        ]
       }
     ]
   },
   plugins: plugins,
   resolve: {
-    root: path.resolve('./app'),
-    extensions: ['', '.js'],
-    modulesDirectories: [
+    modules: [
+      path.resolve(__dirname, './app'),
+      __dirname,
       'node_modules',
       'web_modules' // because https://github.com/webpack/webpack-dev-server/issues/60
     ]
-  },
-  postcss: [
-    autoprefixer({
-      browsers: [
-        'last 3 versions',
-        '> 1%'
-      ]
-    })
-  ]
+  }
 }
