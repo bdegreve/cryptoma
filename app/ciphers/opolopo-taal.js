@@ -1,5 +1,5 @@
 export default {
-  name: 'P-taal',
+  name: 'opolopo-taal',
 
   encrypt: (plaintext) =>
     plaintext.replace(/([aoeiuy]+)/gi, (_, w) => `${w}p${w}l${w}p${w}`)
