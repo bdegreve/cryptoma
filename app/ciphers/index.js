@@ -3,11 +3,13 @@ import pancake from './pancake'
 import ptaal from './ptaal'
 import reverse from './reverse'
 import satan from './satan'
+import vigenere from './vigenere'
 
 export default {
   doppelkastenschlussel,
   pancake,
   ptaal,
   reverse,
-  satan
+  satan,
+  vigenere
 }
