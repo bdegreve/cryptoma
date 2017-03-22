@@ -4,7 +4,7 @@ export default {
   name: 'Satan-taal',
 
   encrypt: (plaintext) =>
-    plaintext.replace(/(\w+)/g, (_, word) => {
+    plaintext.replace(/(\w+)/gu, (_, word) => {
       if (word.length < 4) {
         return word
       }
