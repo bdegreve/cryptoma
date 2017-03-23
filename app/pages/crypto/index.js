@@ -31,8 +31,8 @@ export default React.createClass({
   },
 
   _onDecrypt (text) {
-    const cipher = CIPHERS[this.state.cipher]
-    if (!cipher.decrypt) {
+    const { cipher } = this.props.match.params
+    if (!CIPHERS[cipher].decrypt) {
       return
     }
     this.setState({
