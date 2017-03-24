@@ -1,12 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import ReactDOMServer from 'react-dom/server'
+import { Provider } from 'react-redux'
+import { persistStore } from 'redux-persist'
 import { Route, Switch, BrowserRouter, StaticRouter } from 'react-router-dom'
 
 import Layout from 'pages/layout'
 import Home from 'pages/home'
 import About from 'pages/about'
 import Crypto from 'pages/crypto'
+
+import store from './store'
 
 const App = () =>
   <Layout>
@@ -18,10 +22,13 @@ const App = () =>
   </Layout>
 
 if (typeof document !== 'undefined') {
+  persistStore(store)
   ReactDOM.render(
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>,
+    <Provider store={store}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Provider>,
     document.getElementById('content')
   )
 }
@@ -34,9 +41,11 @@ export default (locals, callback) => {
 
   const context = {}
   const content = ReactDOMServer.renderToString(
-    <StaticRouter location={locals.path} context={context}>
-      <App />
-    </StaticRouter>
+    <Provider store={store}>
+      <StaticRouter location={locals.path} context={context}>
+        <App />
+      </StaticRouter>
+    </Provider>
   )
 
   const title = 'static bootsrap website bootstrap'
