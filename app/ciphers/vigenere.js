@@ -4,56 +4,59 @@ import TextBox from 'components/text-box'
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 
 import textFilter from 'lib/text-filter'
-import { ALPHABET } from 'lib/alphabets'
+import { TABULA_RECTA } from 'lib/alphabets'
+
+const alphabet = TABULA_RECTA
 
 export default {
   name: 'Vigenère',
 
   key: {
     key: 'VIGENERE',
-    runningKey: false,
-    alphabet: ALPHABET
+    runningKey: false
   },
 
-  encrypt: (plaintext, {key, runningKey, alphabet}) => {
+  encrypt: (plaintext, {key, runningKey}) => {
     plaintext = textFilter(plaintext, alphabet)
     key = textFilter(key, alphabet)
     if (runningKey) {
       key = key + plaintext
     }
 
+    const { letters } = alphabet
     const values = {}
-    Array.from(alphabet).forEach((a, i) => {
+    Array.from(letters).forEach((a, i) => {
       values[a] = i
     })
 
     const ciphertext = Array.from(plaintext).map((plain, index) => {
       const p = values[plain]
       const k = values[key[index % key.length]]
-      const c = (p + k) % alphabet.length
-      return alphabet[c]
+      const c = (p + k) % letters.length
+      return letters[c]
     })
 
     return groups(ciphertext.join(''), 5).join(' ')
   },
 
-  decrypt: (ciphertext, {key, runningKey, alphabet}) => {
+  decrypt: (ciphertext, {key, runningKey}) => {
     ciphertext = textFilter(ciphertext, alphabet)
     key = textFilter(key, alphabet)
 
+    const { letters } = alphabet
     const values = {}
-    Array.from(alphabet).forEach((a, i) => {
+    Array.from(letters).forEach((a, i) => {
       values[a] = i
     })
 
     const plaintext = Array.from(ciphertext).map((ciph, index) => {
       const c = values[ciph]
       const k = values[key[index % key.length]]
-      const p = (c - k + alphabet.length) % alphabet.length
+      const p = (c - k + letters.length) % letters.length
       if (runningKey) {
-        key += alphabet[p]
+        key += letters[p]
       }
-      return alphabet[p]
+      return letters[p]
     })
 
     return groups(plaintext.join(''), 5).join(' ')
