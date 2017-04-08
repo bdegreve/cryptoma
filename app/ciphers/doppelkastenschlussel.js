@@ -1,25 +1,33 @@
 import React from 'react'
-import TextBox from 'components/text-box'
-
 import Checkbox from 'react-bootstrap/lib/Checkbox'
+import FormGroup from 'react-bootstrap/lib/FormGroup'
+
+import TextBox from 'components/text-box'
+import AlphabetSelect from 'components/alphabet-select'
+import NumberSelect from 'components/number-select'
+
+import { LATIN_I, alphabet as getAlphabet } from 'lib/alphabets'
+import groups from 'lib/groups'
+
+import styles from './doppelkastenschlussel.less'
 
 export default {
   name: 'Doppelkastenschlüssel',
 
   key: {
+    alphabet: LATIN_I.name,
     key1: 'HAMBURG',
     key2: 'NEWYORK',
-    blockSize: 7,
+    blockSize: 21,
     double: true,
-    spiral: true
+    spiral: false
   },
 
-  encrypt: (plaintext, {key1, key2, blockSize, double, spiral}) => {
-    key1 = keyBox(key1)
-    key2 = keyBox(key2)
-    if (spiral) {
-      key2 = spiralBox(key2)
-    }
+  encrypt: (plaintext, {alphabet, key1, key2, blockSize, double, spiral}) => {
+    alphabet = getAlphabet(alphabet)
+    plaintext = alphabet.filter(plaintext)
+    key1 = keyBox(key1, {alphabet})
+    key2 = keyBox(key2, {alphabet, spiral})
 
     const enc = (p1, p2) => {
       let [i1, j1] = coord(p1, key1)
@@ -33,8 +41,7 @@ export default {
       return [c1, c2]
     }
 
-    const ciphertext = []
-
+    let ciphertext = []
     pairedGroups(plaintext, blockSize).forEach(([plain1, plain2]) => {
       for (let k = 0; k < plain1.length; ++k) {
         const p1 = plain1[k]
@@ -47,12 +54,13 @@ export default {
       }
     })
 
-    return groups(ciphertext.join(''), 5).join(' ')
+    return groups(ciphertext, 5).join(' ')
   },
 
-  decrypt: (ciphertext, {key1, key2, blockSize, double, spiral}) => {
-    key1 = keyBox(key1)
-    key2 = keyBox(key2)
+  decrypt: (ciphertext, {key1, key2, alphabet, blockSize, double, spiral}) => {
+    alphabet = getAlphabet(alphabet)
+    key1 = keyBox(key1, alphabet)
+    key2 = keyBox(key2, alphabet)
     if (spiral) {
       key2 = spiralBox(key2)
     }
@@ -94,47 +102,66 @@ export default {
 
   Settings: ({value, onChange, plaintext}) =>
     <div>
+      <AlphabetSelect size={25}
+        value={value.alphabet}
+        onChange={alphabet => onChange({alphabet})}
+        controlId='doppel-alphabet'
+      />
       <TextBox
         label='Key 1'
         placeholder='First keyword'
         value={value.key1}
-        onChange={v => onChange(Object.assign(value, {
-          key1: textFilter(v)
-        }))}
+        onChange={key1 => onChange({
+          key1: getAlphabet(value.alphabet).filter(key1)
+        })}
         controlId='doppel-key1'
       />
       <TextBox
         label='Key 2'
         placeholder='Second keyword'
         value={value.key2}
-        onChange={v => onChange(Object.assign(value, {
-          key2: textFilter(v)
-        }))}
+        onChange={key2 => onChange({
+          key2: getAlphabet(value.alphabet).filter(key2)
+        })}
         controlId='doppel-key2'
+      />
+      <NumberSelect
+        max={80}
+        label='Block size'
+        value={value.blockSize}
+        onChange={blockSize => onChange({blockSize})}
+        controlId='doppel-blocksize'
       />
       <Checkbox
         checked={value.double}
-        onChange={e => onChange(Object.assign(value, {
+        onChange={e => onChange({
           double: e.target.checked
-        }))}
+        })}
       >
-        Double
+        Double: encrypt each pair twice! (historical correct)
       </Checkbox>
       <Checkbox
         checked={value.spiral}
-        onChange={e => onChange(Object.assign(value, {
+        onChange={e => onChange({
           spiral: e.target.checked
-        }))}
+        })}
       >
-        Spiral
+        Spiral: use a spiral box for second key
       </Checkbox>
+      <FormGroup className={styles.keyboxContainer}>
+        <KeyBox box={keyBox(value.key1, {alphabet: value.alphabet})} />
+        <KeyBox box={keyBox(value.key2, {alphabet: value.alphabet, spiral: value.spiral})} />
+      </FormGroup>
     </div>
 }
 
-const keyBox = key => {
+const keyBox = (key, {alphabet, spiral}) => {
+  if (typeof alphabet !== 'object') {
+    alphabet = getAlphabet(alphabet)
+  }
   const box = []
   const seen = {}
-  key = `${textFilter(key)}ABCDEFGHIKLMNOPQRSTUVWXYZ`
+  key = `${alphabet.filter(key)}${alphabet.letters}`
   Array.from(key).forEach(c => {
     if (seen[c]) {
       return
@@ -143,8 +170,19 @@ const keyBox = key => {
     box.push(c)
   })
   console.assert(box.length === 25, box)
-  return box
+  return spiral ? spiralBox(box) : box
 }
+
+const KeyBox = ({box}) =>
+  <table className={styles.keybox}>
+    <tbody>
+      {[0, 5, 10, 15, 20].map(i =>
+        <tr key={i}>
+          {[0, 1, 2, 3, 4].map(j => <td key={`${i}-${j}`}>{box[i + j]}</td>)}
+        </tr>
+      )}
+    </tbody>
+  </table>
 
 const spiralBox = (array) => {
   console.assert(array.length === _SPIRAL.length)
@@ -159,24 +197,8 @@ const _SPIRAL = [
   4, 5, 6, 7, 8
 ]
 
-const textFilter = s => s
-  .toUpperCase()
-  .replace(/[^A-Z]/g, '')
-  .replace(/J/g, 'I')
-
-const groups = (text, size = 5) => {
-  const res = []
-  text = textFilter(text)
-  while (text.length > 0) {
-    res.push(text.substr(0, size))
-    text = text.substr(size)
-  }
-  return res
-}
-
 const pairedGroups = (text, size = 5) => {
   const res = []
-  text = textFilter(text)
   while (text.length > 2 * size) {
     res.push([text.substr(0, size), text.substr(size, size)])
     text = text.substr(2 * size)
