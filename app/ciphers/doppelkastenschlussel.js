@@ -8,6 +8,7 @@ import NumberSelect from 'components/number-select'
 
 import { LATIN_I, alphabet as getAlphabet } from 'lib/alphabets'
 import groups from 'lib/groups'
+import { interlace, deinterlace } from 'lib/interlace'
 
 import styles from './doppelkastenschlussel.less'
 
@@ -19,15 +20,15 @@ export default {
     key1: 'HAMBURG',
     key2: 'NEWYORK',
     blockSize: 21,
+    deinterlace: true,
     double: true,
     spiral: false
   },
 
-  encrypt: (plaintext, {alphabet, key1, key2, blockSize, double, spiral}) => {
-    alphabet = getAlphabet(alphabet)
-    plaintext = alphabet.filter(plaintext)
-    key1 = keyBox(key1, {alphabet})
-    key2 = keyBox(key2, {alphabet, spiral})
+  encrypt: (plaintext, {blockSize, spiral, ...settings}) => {
+    const alphabet = getAlphabet(settings.alphabet)
+    const key1 = keyBox(settings.key1, {alphabet})
+    const key2 = keyBox(settings.key2, {alphabet, spiral})
 
     const enc = (p1, p2) => {
       let [i1, j1] = coord(p1, key1)
@@ -41,29 +42,31 @@ export default {
       return [c1, c2]
     }
 
-    let ciphertext = []
-    pairedGroups(plaintext, blockSize).forEach(([plain1, plain2]) => {
-      for (let k = 0; k < plain1.length; ++k) {
-        const p1 = plain1[k]
-        const p2 = plain2[k]
-        let [c1, c2] = enc(p1, p2)
-        if (double) {
-          [c1, c2] = enc(c1, c2)
-        }
-        ciphertext.push(c1, c2)
-      }
-    })
+    plaintext = alphabet.filter(plaintext)
+    const interlaced = interlace(plaintext, {blockSize})
+    console.assert(interlaced.length % 2 === 0)
 
+    let ciphertext = []
+    for (let k = 0; k < interlaced.length; k += 2) {
+      const p1 = interlaced[k]
+      const p2 = interlaced[k + 1]
+      let [c1, c2] = enc(p1, p2)
+      if (settings.double) {
+        [c1, c2] = enc(c1, c2)
+      }
+      ciphertext.push(c1, c2)
+    }
+
+    if (settings.deinterlace) {
+      ciphertext = deinterlace(ciphertext, {blockSize})
+    }
     return groups(ciphertext, 5).join(' ')
   },
 
-  decrypt: (ciphertext, {key1, key2, alphabet, blockSize, double, spiral}) => {
-    alphabet = getAlphabet(alphabet)
-    key1 = keyBox(key1, alphabet)
-    key2 = keyBox(key2, alphabet)
-    if (spiral) {
-      key2 = spiralBox(key2)
-    }
+  decrypt: (ciphertext, {blockSize, spiral, ...settings}) => {
+    const alphabet = getAlphabet(settings.alphabet)
+    const key1 = keyBox(settings.key1, {alphabet})
+    const key2 = keyBox(settings.key2, {alphabet, spiral})
 
     const dec = (c1, c2) => {
       let [i1, j2] = coord(c1, key2)
@@ -77,27 +80,22 @@ export default {
       return [p1, p2]
     }
 
-    let plaintext = []
-    let plain1 = []
-    let plain2 = []
-    groups(ciphertext, 2).forEach(pair => {
-      const c1 = pair[0]
-      const c2 = pair[1]
+    ciphertext = alphabet.filter(ciphertext)
+    if (settings.deinterlace) {
+      ciphertext = interlace(ciphertext, {blockSize})
+    }
+
+    let interlaced = []
+    groups(ciphertext, 2).forEach(([c1, c2]) => {
       let [p1, p2] = dec(c1, c2)
-      if (double) {
+      if (settings.double) {
         [p1, p2] = dec(p1, p2)
       }
-      plain1.push(p1)
-      plain2.push(p2)
-      if (plain1.length === blockSize) {
-        plaintext.push(plain1.join(''), plain2.join(''))
-        plain1 = []
-        plain2 = []
-      }
+      interlaced.push(p1, p2)
     })
-    plaintext.push(plain1.join(''), plain2.join(''))
 
-    return groups(plaintext.join(''), 80).join('\n')
+    const plaintext = deinterlace(interlaced, {blockSize})
+    return groups(plaintext, blockSize).join('\n')
   },
 
   Settings: ({value, onChange, plaintext}) =>
@@ -127,7 +125,7 @@ export default {
       />
       <NumberSelect
         max={80}
-        label='Block size'
+        label='Block size (21 for historical correctness)'
         value={value.blockSize}
         onChange={blockSize => onChange({blockSize})}
         controlId='doppel-blocksize'
@@ -138,7 +136,15 @@ export default {
           double: e.target.checked
         })}
       >
-        Double: encrypt each pair twice! (historical correct)
+        Encrypt each pair twice! (for historical correctness)
+      </Checkbox>
+      <Checkbox
+        checked={value.deinterlace}
+        onChange={e => onChange({
+          deinterlace: e.target.checked
+        })}
+      >
+        Deinterlace (for historical correctness)
       </Checkbox>
       <Checkbox
         checked={value.spiral}
@@ -196,20 +202,6 @@ const _SPIRAL = [
   3, 18, 19, 20, 9,
   4, 5, 6, 7, 8
 ]
-
-const pairedGroups = (text, size = 5) => {
-  const res = []
-  while (text.length > 2 * size) {
-    res.push([text.substr(0, size), text.substr(size, size)])
-    text = text.substr(2 * size)
-  }
-  if (text.length % 2 === 1) {
-    text = `${text}X`
-  }
-  size = text.length / 2
-  res.push([text.substr(0, size), text.substr(size, size)])
-  return res
-}
 
 const coord = (c, key) => {
   const k = key.findIndex(o => o === c)
