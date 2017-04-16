@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const DEBUG = process.env.NODE_ENV !== 'production'
 const HASH = !DEBUG ? '-[hash]' : ''
@@ -17,7 +17,9 @@ const plugins = [
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
   }),
   new ExtractTextPlugin(`[name]${CHUNKHASH}.css`),
-  new StaticSiteGeneratorPlugin('main', ['/', '/about', '/crypto'])
+  new HtmlWebpackPlugin({
+    template: path.resolve(__dirname, 'app/index.html')
+  })
 ]
 if (!DEBUG) {
   plugins.push(
