@@ -49,10 +49,6 @@ const Crypto = ({
           onChange={onEncrypt}
           controlId='crypto-plaintext'
         />
-        { Settings
-          ? <Settings value={cipherKey} onChange={onKey} plaintext={plaintext} />
-          : null
-        }
         <TextBox
           className={style.cipher}
           label='Ciphertext'
@@ -65,6 +61,10 @@ const Crypto = ({
           }}
           controlId='crypto-ciphertext'
         />
+        { Settings
+          ? <Settings value={cipherKey} onChange={onKey} plaintext={plaintext} />
+          : null
+        }
       </form>
     </Grid>
   )
