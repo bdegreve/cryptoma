@@ -16,6 +16,7 @@ run: node_modules
 	npm start
 
 dist: node_modules webpack.config.js .babelrc $(SOURCES)
+	npm run webpack
 
 node_modules: package.json yarn.lock
 	yarn install

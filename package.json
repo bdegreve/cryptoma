@@ -6,7 +6,7 @@
   "scripts": {
     "start": "npm run dev",
     "test": "standard",
-    "webpack": "npm run clean && cross-env NODE_ENV=production webpack --progress --colors",
+    "webpack": "cross-env NODE_ENV=production webpack --progress --colors",
     "dev": "node dev-server.js"
   },
   "author": "Bram de Greve <bram.degreve@bramz.net>",
