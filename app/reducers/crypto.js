@@ -1,4 +1,4 @@
-import { _CRYPTO_INPUT, _CRYPTO_KEY, ENCRYPT, DECRYPT } from 'actions/crypto'
+import { _CRYPTO_INPUT, _CRYPTO_KEY, ENCRYPT } from 'actions/crypto'
 
 import CIPHERS from 'ciphers'
 

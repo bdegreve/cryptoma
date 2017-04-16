@@ -74,16 +74,6 @@ export default {
     </div>
 }
 
-const groups = (text, size = 5) => {
-  const res = []
-  text = textFilter(text)
-  while (text.length > 0) {
-    res.push(text.substr(0, size))
-    text = text.substr(size)
-  }
-  return res
-}
-
 const numbers = text => {
   const xs = text.match(/\d+/g)
   console.log(xs)
