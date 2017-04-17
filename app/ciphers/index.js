@@ -1,5 +1,5 @@
 import doppelkastenschlussel from './doppelkastenschlussel'
-import numberstation from './number-station'
+import onetimepad from './one-time-pad'
 import pancake from './pancake'
 import opolopo from './opolopo'
 import reverse from './reverse'
@@ -8,9 +8,9 @@ import vigenere from './vigenere'
 
 export default {
   doppelkastenschlussel,
-  numberstation,
-  pancake,
   opolopo,
+  onetimepad,
+  pancake,
   reverse,
   typoglycemia,
   vigenere
