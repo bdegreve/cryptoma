@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { persistStore } from 'redux-persist'
+import { asyncSessionStorage } from 'redux-persist/storages'
 import { Route, Switch, BrowserRouter } from 'react-router-dom'
 import { IntlProvider } from 'react-intl'
 
@@ -14,7 +15,7 @@ import { messages, parseLocale } from './locales'
 
 import store from './store'
 
-persistStore(store)
+persistStore(store, {storage: asyncSessionStorage})
 
 const App = () =>
   <Layout>

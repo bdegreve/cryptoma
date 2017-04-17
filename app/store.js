@@ -1,4 +1,5 @@
-import { createStore } from 'redux'
+import { compose, createStore } from 'redux'
+import { autoRehydrate } from 'redux-persist'
 
 import rootReducer from './reducers'
 
@@ -16,12 +17,12 @@ function getInitialState () {
 const initialState = getInitialState()
 
 // http://extension.remotedev.io
-const enhancer = typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION__
-  ? window.__REDUX_DEVTOOLS_EXTENSION__()
-  : undefined
+const _compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export default createStore(
   rootReducer,
   initialState,
-  enhancer
+  _compose(
+    autoRehydrate()
+  )
 )
