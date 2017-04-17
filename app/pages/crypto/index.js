@@ -24,7 +24,7 @@ const messages = defineMessages({
   },
   plaintext: {
     id: 'crypto:plaintext',
-    defaultMessage: 'Type in your plaintext or ciphertext ...'
+    defaultMessage: 'Plaintext'
   },
   enterPlaintext: {
     id: 'crypto:enter-plaintext',
@@ -85,10 +85,15 @@ const Crypto = injectIntl(({
             }
           }}
           controlId='crypto-ciphertext'
+          readOnly={!cipher.decrypt}
         />
-        <hr />
         { Settings
-          ? <Settings value={cipherKey} onChange={onKey} plaintext={plaintext} />
+          ? (
+            <div>
+              <h2>Settings</h2>
+              <Settings value={cipherKey} onChange={onKey} plaintext={plaintext} />
+            </div>
+          )
           : null
         }
       </form>
