@@ -3,7 +3,7 @@ import numberstation from './number-station'
 import pancake from './pancake'
 import opolopoTaal from './opolopo-taal'
 import reverse from './reverse'
-import satan from './satan'
+import typoglycemia from './typoglycemia'
 import vigenere from './vigenere'
 
 export default {
@@ -12,6 +12,6 @@ export default {
   pancake,
   opolopoTaal,
   reverse,
-  satan,
+  typoglycemia,
   vigenere
 }

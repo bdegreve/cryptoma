@@ -1,7 +1,7 @@
 import shuffle from 'lib/shuffle'
 
 export default {
-  name: 'Satan-taal',
+  name: 'Typoglycemia',
 
   encrypt: (plaintext) =>
     plaintext.replace(/(\w+)/gu, (_, word) => {
