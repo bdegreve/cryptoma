@@ -21,6 +21,9 @@ dist: node_modules webpack.config.js .babelrc $(SOURCES)
 node_modules: package.json yarn.lock
 	yarn install
 
+translations:
+	npm run translations
+
 check:
 	npm test
 

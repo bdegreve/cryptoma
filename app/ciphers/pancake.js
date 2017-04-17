@@ -1,4 +1,6 @@
 import React from 'react'
+import { FormattedMessage, defineMessages } from 'react-intl'
+
 import Button from 'react-bootstrap/lib/Button'
 
 import TextBox from 'components/text-box'
@@ -6,6 +8,21 @@ import TextBox from 'components/text-box'
 import reverse from 'lib/reverse'
 import withoutWhitespace from 'lib/without-whitespace'
 import { randomFloats } from 'lib/random'
+
+const messages = defineMessages({
+  key: {
+    id: 'pancake:key',
+    defaultMessage: 'Key numbers'
+  },
+  keyPlaceholder: {
+    id: 'pancake:keyPlaceholder',
+    defaultMessage: 'Enter numbers here, seperated with commas'
+  },
+  generate: {
+    id: 'pancake:generate',
+    defaultMessage: 'Generate random key numbers'
+  }
+})
 
 export default {
   name: 'Pancake',
@@ -20,18 +37,18 @@ export default {
   Settings: ({value, onChange, plaintext}) =>
     <div>
       <TextBox
-        label='Key numbers'
-        placeholder='Enter numbers here, seperated with commas'
+        label={messages.key}
+        placeholder={messages.keyPlaceholder}
         value={value || ''}
         onChange={(v) => { onChange(v.replace(/[^0-9]+/g, ',')) }}
         controlId='pancake-key'
       />
-      <Button onClick={() => {
+      <Button bsStyle='primary' onClick={() => {
         const numbers = randomKeyNumbers(plaintext)
         onChange(numbers.join(','))
       }}
       >
-        Generate random keynumbers
+        <FormattedMessage {...messages.generate} />
       </Button>
     </div>
 }

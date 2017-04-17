@@ -1,4 +1,5 @@
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import Nav from 'react-bootstrap/lib/Nav'
 import NavDropdown from 'react-bootstrap/lib/NavDropdown'
@@ -24,7 +25,9 @@ export default ({children}) => (
         </NavDropdown>
       </Nav>
       <Nav pullRight>
-        <NavLink to='/about'>About</NavLink>
+        <NavLink to='/about'>
+          <FormattedMessage id='layout:about' defaultMessage='About Cryptoma' />
+        </NavLink>
       </Nav>
     </AppBar>
     <div className={style.main}>

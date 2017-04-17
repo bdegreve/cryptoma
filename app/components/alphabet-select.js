@@ -1,4 +1,5 @@
 import React from 'react'
+import { FormattedMessage } from 'react-intl'
 
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
@@ -6,9 +7,11 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 
 import { alphabets } from 'lib/alphabets'
 
-export default ({size, square, value, onChange, label = 'Alphabet', controlId}) =>
+export default ({size, square, value, onChange, controlId}) =>
   <FormGroup controlId={controlId}>
-    <ControlLabel>{label}</ControlLabel>
+    <ControlLabel>
+      <FormattedMessage id='alphabet:label' defaultMessage='Alphabet' />
+    </ControlLabel>
     <FormControl
       componentClass='select'
       placeholder='Select alphabet'

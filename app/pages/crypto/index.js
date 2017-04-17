@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { defineMessages, injectIntl } from 'react-intl'
 
 import Grid from 'react-bootstrap/lib/Grid'
 
@@ -16,7 +17,30 @@ import CIPHERS from 'ciphers'
 
 import style from './style.less'
 
-const Crypto = ({
+const messages = defineMessages({
+  instructions: {
+    id: 'crypto:instructions',
+    defaultMessage: 'Type in your plaintext or ciphertext ...'
+  },
+  plaintext: {
+    id: 'crypto:plaintext',
+    defaultMessage: 'Type in your plaintext or ciphertext ...'
+  },
+  enterPlaintext: {
+    id: 'crypto:enter-plaintext',
+    defaultMessage: 'Enter plaintext here'
+  },
+  ciphertext: {
+    id: 'crypto:ciphertext',
+    defaultMessage: 'Ciphertext'
+  },
+  enterCiphertext: {
+    id: 'crypto:enter-ciphertext',
+    defaultMessage: 'Enter ciphertext here'
+  }
+})
+
+const Crypto = injectIntl(({
   input,
   mode,
   cipherId,
@@ -24,7 +48,8 @@ const Crypto = ({
   cipherKey,
   onEncrypt,
   onDecrypt,
-  onKey
+  onKey,
+  intl
 }) => {
   if (!cipher) {
     return <p>{cipherId} not found</p>
@@ -38,21 +63,21 @@ const Crypto = ({
     <Grid componentClass='main'>
       <header>
         <h1>{name || cipherId}</h1>
-        <p>Type in your plaintext or ciphertext ...</p>
+        <p>{intl.formatMessage(messages.instructions)}</p>
       </header>
       <form>
         <TextBox
           className={style.cipher}
-          label='Plaintext'
-          placeholder='Enter plaintext here'
+          label={intl.formatMessage(messages.plaintext)}
+          placeholder={intl.formatMessage(messages.enterPlaintext)}
           value={plaintext}
           onChange={onEncrypt}
           controlId='crypto-plaintext'
         />
         <TextBox
           className={style.cipher}
-          label='Ciphertext'
-          placeholder='Enter ciphertext here'
+          label={intl.formatMessage(messages.ciphertext)}
+          placeholder={intl.formatMessage(messages.enterCiphertext)}
           value={ciphertext}
           onChange={value => {
             if (cipher.decrypt) {
@@ -61,6 +86,7 @@ const Crypto = ({
           }}
           controlId='crypto-ciphertext'
         />
+        <hr />
         { Settings
           ? <Settings value={cipherKey} onChange={onKey} plaintext={plaintext} />
           : null
@@ -68,7 +94,7 @@ const Crypto = ({
       </form>
     </Grid>
   )
-}
+})
 
 const mapStateToProps = (state, props) => {
   const { mode, input, keys } = state.crypto

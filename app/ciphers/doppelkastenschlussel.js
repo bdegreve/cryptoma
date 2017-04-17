@@ -1,4 +1,6 @@
 import React from 'react'
+import { FormattedMessage, defineMessages } from 'react-intl'
+
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 
@@ -11,6 +13,41 @@ import groups from 'lib/groups'
 import { interlace, deinterlace } from 'lib/interlace'
 
 import styles from './doppelkastenschlussel.less'
+
+const messages = defineMessages({
+  key1: {
+    id: 'doppel:key1',
+    defaultMessage: 'Key 1'
+  },
+  key1Placeholder: {
+    id: 'doppel:key1Placeholder',
+    defaultMessage: 'First key, avoid duplicate letters'
+  },
+  key2: {
+    id: 'doppel:key2',
+    defaultMessage: 'Key 2'
+  },
+  key2Placeholder: {
+    id: 'doppel:key2Placeholder',
+    defaultMessage: 'Second key, avoid duplicate letters'
+  },
+  blockSize: {
+    id: 'doppel:blockSize',
+    defaultMessage: 'Block size (21 for historical correctness)'
+  },
+  double: {
+    id: 'doppel:double',
+    defaultMessage: 'Encrypt each pair twice! (for historical correctness)'
+  },
+  deinterlace: {
+    id: 'doppel:deinterlace',
+    defaultMessage: 'Deinterlace cipher text (for historical correctness)'
+  },
+  spiral: {
+    id: 'doppel:spiral',
+    defaultMessage: 'Use spiral box for key 2'
+  }
+})
 
 export default {
   name: 'Doppelkastenschlüssel',
@@ -106,8 +143,8 @@ export default {
         controlId='doppel-alphabet'
       />
       <TextBox
-        label='Key 1'
-        placeholder='First keyword'
+        label={messages.key1}
+        placeholder={messages.key1Placeholder}
         value={value.key1}
         onChange={key1 => onChange({
           key1: getAlphabet(value.alphabet).filter(key1)
@@ -115,8 +152,8 @@ export default {
         controlId='doppel-key1'
       />
       <TextBox
-        label='Key 2'
-        placeholder='Second keyword'
+        label={messages.key2}
+        placeholder={messages.key2Placeholder}
         value={value.key2}
         onChange={key2 => onChange({
           key2: getAlphabet(value.alphabet).filter(key2)
@@ -125,7 +162,7 @@ export default {
       />
       <NumberSelect
         max={80}
-        label='Block size (21 for historical correctness)'
+        label={<FormattedMessage {...messages.blockSize} />}
         value={value.blockSize}
         onChange={blockSize => onChange({blockSize})}
         controlId='doppel-blocksize'
@@ -136,7 +173,7 @@ export default {
           double: e.target.checked
         })}
       >
-        Encrypt each pair twice! (for historical correctness)
+        <FormattedMessage {...messages.double} />
       </Checkbox>
       <Checkbox
         checked={value.deinterlace}
@@ -144,7 +181,7 @@ export default {
           deinterlace: e.target.checked
         })}
       >
-        Deinterlace (for historical correctness)
+        <FormattedMessage {...messages.deinterlace} />
       </Checkbox>
       <Checkbox
         checked={value.spiral}
@@ -152,7 +189,7 @@ export default {
           spiral: e.target.checked
         })}
       >
-        Spiral: use a spiral box for second key
+        <FormattedMessage {...messages.spiral} />
       </Checkbox>
       <FormGroup className={styles.keyboxContainer}>
         <KeyBox box={keyBox(value.key1, {alphabet: value.alphabet})} />
