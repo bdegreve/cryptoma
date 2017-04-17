@@ -4,7 +4,7 @@ import { FormattedMessage, defineMessages } from 'react-intl'
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 
-import TextBox from 'components/text-box'
+import Input from 'components/input'
 import AlphabetSelect from 'components/alphabet-select'
 import NumberSelect from 'components/number-select'
 
@@ -142,7 +142,7 @@ export default {
         onChange={alphabet => onChange({alphabet})}
         controlId='doppel-alphabet'
       />
-      <TextBox
+      <Input
         label={messages.key1}
         placeholder={messages.key1Placeholder}
         value={value.key1}
@@ -151,7 +151,7 @@ export default {
         })}
         controlId='doppel-key1'
       />
-      <TextBox
+      <Input
         label={messages.key2}
         placeholder={messages.key2Placeholder}
         value={value.key2}

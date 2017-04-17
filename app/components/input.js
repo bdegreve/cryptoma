@@ -6,7 +6,7 @@ import FormControl from 'react-bootstrap/lib/FormControl'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 
 export default injectIntl(({
-  type,
+  type = 'text',
   label,
   placeholder,
   value,

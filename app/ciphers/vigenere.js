@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 
 import AlphabetSelect from 'components/alphabet-select'
-import TextBox from 'components/text-box'
+import Input from 'components/text-box'
 
 import textFilter from 'lib/text-filter'
 import { ALPHABET, alphabet as getAlphabet } from 'lib/alphabets'
@@ -70,7 +70,11 @@ export default {
 
   Settings: ({value, onChange, plaintext}) =>
     <div>
-      <TextBox
+      <AlphabetSelect
+        value={value.alphabet}
+        onChange={alphabet => onChange({alphabet})}
+      />
+      <Input
         label={<FormattedMessage id='vigenere:key' defaultMessage='Key' />}
         placeholder='Keyword'
         value={value.key}
@@ -90,9 +94,5 @@ export default {
           defaultMessage='Autokey (extends key with plaintext)'
         />
       </Checkbox>
-      <AlphabetSelect
-        value={value.alphabet}
-        onChange={alphabet => onChange({alphabet})}
-      />
     </div>
 }
