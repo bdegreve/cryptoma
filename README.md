@@ -1,31 +1,77 @@
 # Cryptoma
 
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+[![Website](https://img.shields.io/website/https/cryptoma.bramz.net.svg)](https://cryptoma.bramz.net/)
+[![License](https://img.shields.io/badge/license-ISC-blue.svg)](https://opensource.org/licenses/ISC)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-blue.svg)](http://standardjs.com/)
 
-Starterkit to make staticly generated websites using React and Bootstrap
+This tool was created for the purpose of enciphering parts of the route description of [Joepie 27](http://www.joepie27.be/), tocht C.
+
+## Website
+
+A live version of Cryptoma can be accessed at [cryptoma.bramz.net](https://cryptoma.bramz.net/).
+
+## License
+
+ISC, see [LICENSE](./LICENSE) file.
 
 ## Requirements
 
-Node.js (v4.x LTS recommended) and NPM (v3.x recommended).
+  - Node.js (v6.x LTS recommended) and NPM (v3.x recommended). Various download
+    options are available at [nodejs.org](https://nodejs.org/en/download/),
+    including instructions using [package managers](https://nodejs.org/en/download/package-manager/).
+  - Optional: [Yarn](https://yarnpkg.com/en/docs/install) to install the dependencies.
+  - Optional: `make`
 
-- Windows: Download and install Node.js from [nodejs.org](https://nodejs.org). NPM is included.
-- Debian/Ubuntu: `sudo apt-get install nodejs-legacy npm`
+## How to build
 
-## Getting started
+  - Install dependencies:
+    ```
+    npm install
+    ```
+    Or, if you have Yarn:
+    ```
+    yarn install
+    ```
+  - Run development server at [localhost:8080](http://localhost:8080):
+    ```
+    npm start
+    ```
+  - If you've chanced source code, update locale files (in `app/locales`):
+    ```
+    npm run translations
+    ```
+  - Run tests
+    ```
+    npm test
+    ```
+  - Make production build (in `dist`):
+    ```
+    npm run dist
+    ```
 
-To install all dependencies and build your static website, run this single command:
+### Using `make`
 
-```
-npm install
-```
-
-That's it! Your static website can be found in `dist/`, ready to be deployed.
-
-Other commands:
-- `npm start`: run a live development server at http://localhost:8080, usefull while developing your website.
-- `npm test`: run some tests (just your codestyle for now)
-
-## References
-- http://jxnblk.com/writing/posts/static-site-generation-with-react-and-webpack/
-- https://css-tricks.com/css-modules-part-3-react/
-- http://jeffhandley.github.io/QuickReactions/20-final-cleanup.html
+  - Run development server at [localhost:8080](http://localhost:8080):
+    ```
+    make run
+    ```
+  - If you've chanced source code, update locale files (in `app/locales`):
+    ```
+    make translations
+    ```
+  - Run tests
+    ```
+    make check
+    ```
+  - Make production build (in `dist`):
+    ```
+    make
+    ```
+  - Clean up build
+    ```
+    make clean
+    ```
+  - Clean up everything (including dependencies)
+    ```
+    make distclean
+    ```
