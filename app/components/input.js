@@ -18,7 +18,6 @@ export default injectIntl(({
   return <FormGroup controlId={controlId}>
     <ControlLabel>{_format(label, intl)}</ControlLabel>
     <FormControl
-      componentClass={type}
       value={value}
       placeholder={_format(placeholder || label, intl)}
       onChange={(e) => onChange(e.target.value)}
