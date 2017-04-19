@@ -11,7 +11,7 @@
     "dev": "node dev-server.js"
   },
   "author": "Bram de Greve <bram.degreve@bramz.net>",
-  "license": "UNLICENSED",
+  "license": "ISC",
   "private": true,
   "standard": {
     "parser": "babel-eslint"
