@@ -1,4 +1,6 @@
-export default (array) => {
+/* @flow */
+
+export default (array: Array<any>) => {
   const copy = [...array]
   const res = []
   while (copy.length) {

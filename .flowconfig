@@ -1,0 +1,15 @@
+[ignore]
+<PROJECT_ROOT>/build/.*
+<PROJECT_ROOT>/dist/.*
+
+[include]
+
+[libs]
+
+[options]
+module.name_mapper='^actions/\(.*\)$' -> '<PROJECT_ROOT>/app/actions/\1'
+module.name_mapper='^ciphers$' -> '<PROJECT_ROOT>/app/ciphers'
+module.name_mapper='^components/\(.*\)$' -> '<PROJECT_ROOT>/app/components/\1'
+module.name_mapper='^lib/\(.*\)$' -> '<PROJECT_ROOT>/app/lib/\1'
+module.name_mapper='^pages/\(.*\)$' -> '<PROJECT_ROOT>/app/pages/\1'
+module.name_mapper.extension='less' -> '<PROJECT_ROOT>/scripts/css-module.js.flow'

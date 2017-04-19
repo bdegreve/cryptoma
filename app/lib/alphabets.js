@@ -1,7 +1,25 @@
+/* @flow */
+
 const AZ = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 const AZ09 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
 
-function createAlphabet ({name, description, baseletters, substitutes = {}}) {
+type Alphabet = {
+  name: string,
+  description: string,
+  letters: string,
+  mapping: { [string]: string },
+  square: boolean,
+  filter: (string) => string
+}
+
+type CreateAlphabetOptions = {
+  name: string,
+  description: string,
+  baseletters: string,
+  substitutes?: { [string]: string }
+}
+
+function createAlphabet ({name, description, baseletters, substitutes = {}}: CreateAlphabetOptions): Alphabet {
   const letters = Object.keys(substitutes).reduce(
     (res, sub) => res.replace(sub, ''), baseletters)
 
@@ -24,7 +42,7 @@ function createAlphabet ({name, description, baseletters, substitutes = {}}) {
   }
 }
 
-function filter (text) {
+function filter (text: string) {
   text = text.normalize('NFKD').toUpperCase()
   return Array.from(text)
     .map(c => this.mapping[c])
@@ -81,9 +99,20 @@ export const ALPHABETS = [
   YS_VRIJ
 ]
 
-export const alphabet = (name) => ALPHABETS.find(x => x.name === name)
+export const alphabet = (name: string) => {
+  const res = ALPHABETS.find(x => x.name === name)
+  if (!res) {
+    throw new Error(`Unknown alphabet '${name}'`)
+  }
+  return res
+}
 
-export const alphabets = ({size = null, square = false}) =>
+type AlphabetsOptions = {
+  size?: number,
+  square?: boolean
+}
+
+export const alphabets = ({size = 0, square = false}: AlphabetsOptions) =>
   ALPHABETS.filter(alphabet => {
     if (size && alphabet.letters.length !== size) {
       return false

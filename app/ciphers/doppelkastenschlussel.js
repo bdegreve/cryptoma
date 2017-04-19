@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react'
 import { FormattedMessage, defineMessages } from 'react-intl'
 
@@ -49,6 +51,22 @@ const messages = defineMessages({
   }
 })
 
+type Settings = {
+  alphabet: string,
+  key1: string,
+  key2: string,
+  blockSize: number,
+  deinterlace: boolean,
+  double: boolean,
+  spiral: boolean
+}
+
+type SettingsProps = {
+  value: Settings,
+  onChange: Function,
+  plaintext: string
+}
+
 export default {
   name: 'Doppelkastenschlüssel',
 
@@ -62,9 +80,9 @@ export default {
     spiral: false
   },
 
-  encrypt: (plaintext, {blockSize, spiral, ...settings}) => {
+  encrypt: (plaintext: string, {blockSize, spiral, ...settings}: Settings) => {
     const alphabet = getAlphabet(settings.alphabet)
-    const key1 = keyBox(settings.key1, {alphabet})
+    const key1 = keyBox(settings.key1, {alphabet, spiral: false})
     const key2 = keyBox(settings.key2, {alphabet, spiral})
 
     const enc = (p1, p2) => {
@@ -100,9 +118,9 @@ export default {
     return groups(ciphertext, 5).join(' ')
   },
 
-  decrypt: (ciphertext, {blockSize, spiral, ...settings}) => {
+  decrypt: (ciphertext: string, {blockSize, spiral, ...settings}: Settings) => {
     const alphabet = getAlphabet(settings.alphabet)
-    const key1 = keyBox(settings.key1, {alphabet})
+    const key1 = keyBox(settings.key1, {alphabet, spiral: false})
     const key2 = keyBox(settings.key2, {alphabet, spiral})
 
     const dec = (c1, c2) => {
@@ -119,7 +137,7 @@ export default {
 
     ciphertext = alphabet.filter(ciphertext)
     if (settings.deinterlace) {
-      ciphertext = interlace(ciphertext, {blockSize})
+      ciphertext = interlace(ciphertext, {blockSize}).join('')
     }
 
     let interlaced = []
@@ -135,7 +153,7 @@ export default {
     return groups(plaintext, blockSize).join('\n')
   },
 
-  Settings: ({value, onChange, plaintext}) =>
+  Settings: ({value, onChange, plaintext}: SettingsProps) =>
     <div>
       <AlphabetSelect size={25}
         value={value.alphabet}
@@ -192,7 +210,7 @@ export default {
         <FormattedMessage {...messages.spiral} />
       </Checkbox>
       <FormGroup className={styles.keyboxContainer}>
-        <KeyBox box={keyBox(value.key1, {alphabet: value.alphabet})} />
+        <KeyBox box={keyBox(value.key1, {alphabet: value.alphabet, spiral: false})} />
         <KeyBox box={keyBox(value.key2, {alphabet: value.alphabet, spiral: value.spiral})} />
       </FormGroup>
     </div>

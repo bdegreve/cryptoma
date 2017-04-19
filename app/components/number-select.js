@@ -1,20 +1,28 @@
+/* @flow */
+
 import React from 'react'
 
 import DropDown from 'components/drop-down'
 
-export default ({min = 1, max, onChange, ...rest}) =>
+type Props = {
+  value: number,
+  onChange: (number) => void,
+  max: number,
+  min?: number
+}
+
+export default ({value, onChange, max, min = 1, ...rest}: Props) =>
   <DropDown
-    options={numbers(min, max)}
+    value={value.toString()}
     onChange={value => onChange(parseInt(value))}
+    options={range(min, max)}
     {...rest}
   />
 
-const numbers = (min, max) => {
-  console.assert(typeof min !== 'undefined')
-  console.assert(typeof max !== 'undefined')
+const range = (min: number, max: number) => {
   const result = []
   for (let k = min; k <= max; ++k) {
-    result.push(k)
+    result.push(k.toString())
   }
   return result
 }

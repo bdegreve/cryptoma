@@ -1,24 +1,32 @@
-export function interlace (input, {blockSize}) {
+/* @flow */
+
+type Options = {
+  blockSize: number
+}
+
+export function interlace (input: string, {blockSize}: Options) {
   let result = []
-  while (input.length > 0) {
-    if (input.length < 2 * blockSize || !blockSize) {
-      if (input.length % 2 !== 0) {
-        input = `${input}X`
-      }
-      blockSize = input.length / 2
+  if (input.length % 2 !== 0) {
+    input = `${input}X`
+  }
+  let start = 0
+  while (start < input.length) {
+    const remaining = input.length - start
+    if (remaining < 2 * blockSize || !blockSize) {
+      blockSize = remaining / 2
     }
-    const block1 = input.substr(0, blockSize)
-    const block2 = input.substr(blockSize, blockSize)
-    input = input.substr(2 * blockSize)
+    const block1 = input.slice(start, start + blockSize)
+    const block2 = input.slice(start + blockSize, start + 2 * blockSize)
     console.assert(block1.length === block2.length)
     for (let k = 0; k < blockSize; ++k) {
       result.push(block1[k], block2[k])
     }
+    start += 2 * blockSize
   }
   return result
 }
 
-export function deinterlace (input, {blockSize}) {
+export function deinterlace (input: string | Array<string>, {blockSize}: Options) {
   input = [...input]
   if (input.length % 2 !== 0) {
     input.push('X')

@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react'
 import TextBox from 'components/text-box'
 
@@ -9,6 +11,17 @@ import { ALPHABET } from 'lib/alphabets'
 
 const alphabet = ALPHABET
 
+type Settings = {
+  otp: Array<number>,
+  modulo: boolean
+}
+
+type SettingsProps = {
+  value: Settings,
+  onChange: Function,
+  plaintext: string
+}
+
 export default {
   name: 'One-Time Pad',
 
@@ -17,7 +30,7 @@ export default {
     modulo: true
   },
 
-  encrypt: (plaintext, {otp, modulo}) => {
+  encrypt: (plaintext: string, {otp, modulo}: Settings) => {
     plaintext = textFilter(plaintext, alphabet)
 
     const { letters } = alphabet
@@ -36,7 +49,7 @@ export default {
     return ciphertext.join(' ')
   },
 
-  Settings: ({value, onChange, plaintext}) =>
+  Settings: ({value, onChange, plaintext}: SettingsProps) =>
     <div>
       <TextBox
         label='One time pad'
@@ -75,8 +88,7 @@ export default {
     </div>
 }
 
-const numbers = text => {
+const numbers = (text: string) => {
   const xs = text.match(/\d+/g)
-  console.log(xs)
-  return xs.map(x => parseInt(x))
+  return xs ? xs.map(x => parseInt(x)) : [0]
 }

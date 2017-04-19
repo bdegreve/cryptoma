@@ -1,3 +1,5 @@
+/* @flow */
+
 import { compose, createStore } from 'redux'
 import { autoRehydrate } from 'redux-persist'
 

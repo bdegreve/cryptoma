@@ -1,3 +1,6 @@
+/* @flow */
+/* global Generator */
+
 const crypto = typeof window !== 'undefined'
   ? window.crypto || window.msCrypto || undefined
   : undefined
@@ -7,7 +10,7 @@ const N = 4294967296 // 2 ** 32
 export const hasCrypto = !!crypto
 
 // generates random numbers in range [0, 1), 1 not included.
-export function * randomFloats () {
+export function * randomFloats (): Generator<number, void, void> {
   if (crypto) {
     let xs = new Uint32Array(16)
     let k = xs.length
@@ -26,7 +29,7 @@ export function * randomFloats () {
 }
 
 // generates random integers in range [0, n), n not included
-export function * randomIntegers (n) {
+export function * randomIntegers (n: number): Generator<number, void, void> {
   if (crypto) {
     const Nprime = Math.floor(N / n) * n
     let xs = new Uint32Array(16)

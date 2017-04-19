@@ -1,9 +1,21 @@
+/* @flow */
+
 import React from 'react'
 import { injectIntl } from 'react-intl'
 
 import FormGroup from 'react-bootstrap/lib/FormGroup'
 import FormControl from 'react-bootstrap/lib/FormControl'
 import ControlLabel from 'react-bootstrap/lib/ControlLabel'
+
+type Props = {
+  value: any,
+  onChange: (any) => void,
+  type?: string,
+  label?: string,
+  placeholder?: string,
+  controlId?: string,
+  intl: any
+}
 
 export default injectIntl(({
   type = 'text',
@@ -14,7 +26,7 @@ export default injectIntl(({
   controlId,
   intl,
   ...rest
-}) => {
+}: Props) => {
   return <FormGroup controlId={controlId}>
     <ControlLabel>{_format(label, intl)}</ControlLabel>
     <FormControl

@@ -1,6 +1,8 @@
+/* @flow */
+
 import reverse from 'lib/reverse'
 
-const _reverse = (str) => str.split('\n').map(reverse).join('\n')
+const _reverse = (str: string) => str.split('\n').map(reverse).join('\n')
 
 export default {
   name: 'Reverse',

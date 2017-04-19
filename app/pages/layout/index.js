@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 
@@ -12,7 +14,13 @@ import CIPHERS from 'ciphers'
 
 import style from './style.less'
 
-export default ({children}) => (
+import type { Children } from 'react'
+
+type Props = {
+  children?: Children
+}
+
+export default ({children}: Props) => (
   <div>
     <AppBar brand='Cryptoma'>
       <Nav>

@@ -1,7 +1,9 @@
+/* @flow */
+
 export default {
   name: 'Opolopo',
 
-  encrypt: (plaintext) =>
+  encrypt: (plaintext: string) =>
     plaintext.replace(/([aoeiuy]+)/gi, (_, w) => `${w}p${w}l${w}p${w}`)
 }
 

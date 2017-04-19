@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react'
 import { FormattedMessage, defineMessages } from 'react-intl'
 
@@ -24,36 +26,50 @@ const messages = defineMessages({
   }
 })
 
+type Settings = {
+  flips: string
+}
+
+type SettingsProps = {
+  value: Settings,
+  onChange: Function,
+  plaintext: string
+}
+
 export default {
   name: 'Pancake',
 
-  decrypt: (ciphertext, key) => sort(ciphertext, asNumbers(key)),
-
-  encrypt: (plaintext, key) => {
-    const numbers = [...asNumbers(key)].reverse()
-    return sort(plaintext, numbers)
+  key: {
+    flips: ''
   },
 
-  Settings: ({value, onChange, plaintext}) =>
+  decrypt: (ciphertext: string, {flips}: Settings) => sort(ciphertext, asNumbers(flips)),
+
+  encrypt: (plaintext: string, {flips}: Settings) => sort(plaintext, [...asNumbers(flips)].reverse()),
+
+  Settings: ({value, onChange, plaintext}: SettingsProps) =>
     <div>
       <TextBox
         label={messages.key}
         placeholder={messages.keyPlaceholder}
-        value={value || ''}
-        onChange={(v) => { onChange(v.replace(/[^0-9]+/g, ',')) }}
+        value={value.flips}
+        onChange={v => onChange({
+          flips: v.replace(/[^0-9]+/g, ' ')
+        })}
         controlId='pancake-key'
       />
-      <Button bsStyle='primary' onClick={() => {
-        const numbers = randomKeyNumbers(plaintext)
-        onChange(numbers.join(','))
-      }}
+      <Button
+        bsStyle='primary'
+        onClick={() => onChange({
+          flips: randomKeyNumbers(plaintext).join(' ')
+        })}
       >
         <FormattedMessage {...messages.generate} />
       </Button>
     </div>
 }
 
-function randomKeyNumbers (plaintext) {
+function randomKeyNumbers (plaintext: string) {
   const n = withoutWhitespace(plaintext).length
 
   // generate n integers in range [2, n]
@@ -61,6 +77,9 @@ function randomKeyNumbers (plaintext) {
   const rng = randomFloats()
   while (numbers.length < n) {
     const x = rng.next().value
+    if (x === undefined) {
+      break
+    }
     const k = 2 + Math.floor(Math.pow(x, 2) * (n - 1))
     if (numbers.length > 0 && numbers[numbers.length - 1] === k) {
       continue // avoid duplicates
@@ -81,7 +100,7 @@ function randomKeyNumbers (plaintext) {
   return numbers
 }
 
-const sort = (text, numbers) =>
+const sort = (text: string, numbers: Array<number>) =>
   numbers.reduce(
     (s, n) => {
       const head = s.substr(0, n)
@@ -91,4 +110,7 @@ const sort = (text, numbers) =>
     withoutWhitespace(text).toLocaleUpperCase()
   )
 
-const asNumbers = (str) => str ? str.match(/\d+/g) : []
+const asNumbers = (text?: string) => {
+  const xs = text && text.match(/\d+/g)
+  return xs ? xs.map(x => parseInt(x)) : []
+}

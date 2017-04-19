@@ -1,9 +1,11 @@
+/* @flow */
+
 import shuffle from 'lib/shuffle'
 
 export default {
   name: 'Typoglycemia',
 
-  encrypt: (plaintext) =>
+  encrypt: (plaintext: string) =>
     plaintext.replace(/(\w+)/gu, (_, word) => {
       if (word.length < 4) {
         return word

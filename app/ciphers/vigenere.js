@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 
@@ -10,6 +12,18 @@ import textFilter from 'lib/text-filter'
 import { ALPHABET, alphabet as getAlphabet } from 'lib/alphabets'
 import groups from 'lib/groups'
 
+type Settings = {
+  alphabet: string,
+  key: string,
+  autoKey: boolean
+}
+
+type SettingsProps = {
+  value: Settings,
+  onChange: Function,
+  plaintext: string
+}
+
 export default {
   name: 'Vigenère & Autokey',
 
@@ -19,56 +33,53 @@ export default {
     alphabet: ALPHABET.name
   },
 
-  encrypt: (plaintext, {key, alphabet, autoKey}) => {
-    alphabet = getAlphabet(alphabet)
-    plaintext = alphabet.filter(plaintext)
-    key = alphabet.filter(key)
-    console.log('been here')
+  encrypt: (plaintext: string, {key, alphabet, autoKey}: Settings) => {
+    const alpha = getAlphabet(alphabet)
+    const values = {}
+    Array.from(alpha.letters).forEach((a, i) => {
+      values[a] = i
+    })
+
+    plaintext = alpha.filter(plaintext)
+    key = alpha.filter(key)
     if (autoKey) {
       key = key + plaintext
     }
 
-    const { letters } = alphabet
-    const values = {}
-    Array.from(letters).forEach((a, i) => {
-      values[a] = i
-    })
-
     const ciphertext = Array.from(plaintext).map((plain, index) => {
       const p = values[plain]
       const k = values[key[index % key.length]]
-      const c = (p + k) % letters.length
-      return letters[c]
+      const c = (p + k) % alpha.letters.length
+      return alpha.letters[c]
     })
 
     return groups(ciphertext, 5).join(' ')
   },
 
-  decrypt: (ciphertext, {key, alphabet, autoKey}) => {
-    alphabet = getAlphabet(alphabet)
-    ciphertext = alphabet.filter(ciphertext)
-    key = alphabet.filter(key)
-
-    const { letters } = alphabet
+  decrypt: (ciphertext: string, {key, alphabet, autoKey}: Settings) => {
+    const alpha = getAlphabet(alphabet)
     const values = {}
-    Array.from(letters).forEach((a, i) => {
+    Array.from(alpha.letters).forEach((a, i) => {
       values[a] = i
     })
+
+    ciphertext = alpha.filter(ciphertext)
+    key = alpha.filter(key)
 
     const plaintext = Array.from(ciphertext).map((ciph, index) => {
       const c = values[ciph]
       const k = values[key[index % key.length]]
       const p = (c - k + letters.length) % letters.length
       if (autoKey) {
-        key += letters[p]
+        key += alpha.letters[p]
       }
-      return letters[p]
+      return alpha.letters[p]
     })
 
     return groups(plaintext, 5).join(' ')
   },
 
-  Settings: ({value, onChange, plaintext}) =>
+  Settings: ({value, onChange, plaintext}: SettingsProps) =>
     <div>
       <AlphabetSelect
         value={value.alphabet}

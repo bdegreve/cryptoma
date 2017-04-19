@@ -1,17 +1,30 @@
+/* @flow */
+
 import { _CRYPTO_INPUT, _CRYPTO_KEY, ENCRYPT } from 'actions/crypto'
+import type { Action, Mode, Key } from 'actions/crypto'
 
 import CIPHERS from 'ciphers'
 
-const initialState = {
+type Keys = {
+  [string]: Key
+}
+
+type State = {
+  input: string,
+  mode: Mode,
+  keys: Keys
+}
+
+const initialState: State = {
   input: 'The quick brown fox jumps over the lazy dog',
   mode: ENCRYPT,
   keys: Object.keys(CIPHERS).reduce((keys, cipher) => ({
     ...keys,
-    [cipher]: CIPHERS[cipher].key
+    [cipher]: CIPHERS[cipher].key || {}
   }), {})
 }
 
-export default (state = initialState, action) => {
+export default (state: State = initialState, action: Action) => {
   switch (action.type) {
     case _CRYPTO_INPUT:
       return {

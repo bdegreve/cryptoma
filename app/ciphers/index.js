@@ -1,3 +1,5 @@
+/* @flow */
+
 import doppelkastenschlussel from './doppelkastenschlussel'
 import onetimepad from './one-time-pad'
 import pancake from './pancake'

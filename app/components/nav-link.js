@@ -1,8 +1,17 @@
+/* @flow */
+
 import React from 'react'
 import { Route } from 'react-router-dom'
 import NavItem from 'react-bootstrap/lib/NavItem'
 
-export default ({to, exact, strict, active, ...rest}) =>
+type Props = {
+  to: string,
+  exact?: boolean,
+  strict?: boolean,
+  active?: boolean
+}
+
+export default ({to, exact, strict, active, ...rest}: Props) =>
   <Route
     path={to}
     exact={exact}

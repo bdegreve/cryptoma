@@ -1,4 +1,6 @@
-export default (input, size = 5) => {
+/* @flow */
+
+export default (input: string | Array<string>, size: number = 5) => {
   if (Array.isArray(input)) {
     input = input.join('')
   }

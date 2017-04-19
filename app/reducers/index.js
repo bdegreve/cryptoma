@@ -1,3 +1,5 @@
+/* @flow */
+
 import { combineReducers } from 'redux'
 
 import crypto from './crypto'

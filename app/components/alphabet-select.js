@@ -1,3 +1,5 @@
+/* @flow */
+
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 
@@ -7,7 +9,15 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel'
 
 import { alphabets } from 'lib/alphabets'
 
-export default ({size, square, value, onChange, controlId}) =>
+type Props = {
+  value: string,
+  onChange: (string) => void,
+  size?: number,
+  square?: boolean,
+  controlId?: string
+}
+
+export default ({value, onChange, size, square, controlId}: Props) =>
   <FormGroup controlId={controlId}>
     <ControlLabel>
       <FormattedMessage id='alphabet:label' defaultMessage='Alphabet' />
