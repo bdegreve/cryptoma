@@ -6,7 +6,7 @@ import { FormattedMessage } from 'react-intl'
 import Nav from 'react-bootstrap/lib/Nav'
 import NavDropdown from 'react-bootstrap/lib/NavDropdown'
 
-import AppBar from 'components/navbar'
+import AppBar from 'components/app-bar'
 import NavLink from 'components/nav-link'
 import MenuLink from 'components/menu-link'
 
