@@ -21,10 +21,4 @@ const initialState = getInitialState()
 // http://extension.remotedev.io
 const _compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-export default createStore(
-  rootReducer,
-  initialState,
-  _compose(
-    autoRehydrate()
-  )
-)
+export default createStore(rootReducer, initialState, _compose(autoRehydrate()))

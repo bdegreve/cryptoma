@@ -18,10 +18,13 @@ type State = {
 const initialState: State = {
   input: 'The quick brown fox jumps over the lazy dog',
   mode: ENCRYPT,
-  keys: Object.keys(CIPHERS).reduce((keys, cipher) => ({
-    ...keys,
-    [cipher]: CIPHERS[cipher].key || {}
-  }), {})
+  keys: Object.keys(CIPHERS).reduce(
+    (keys, cipher) => ({
+      ...keys,
+      [cipher]: CIPHERS[cipher].key || {}
+    }),
+    {}
+  )
 }
 
 export default (state: State = initialState, action: Action) => {

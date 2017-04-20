@@ -11,13 +11,9 @@ type Props = {
   active?: boolean
 }
 
-export default ({to, exact, strict, active, ...rest}: Props) =>
-  <Route
-    path={to}
-    exact={exact}
-    strict={strict}
-  >
-    {({match, history}) =>
+export default ({ to, exact, strict, active, ...rest }: Props) => (
+  <Route path={to} exact={exact} strict={strict}>
+    {({ match, history }) => (
       <MenuItem
         href={to}
         active={!!match}
@@ -27,5 +23,6 @@ export default ({to, exact, strict, active, ...rest}: Props) =>
         }}
         {...rest}
       />
-    }
+    )}
   </Route>
+)

@@ -33,7 +33,7 @@ export default {
     alphabet: ALPHABET.name
   },
 
-  encrypt: (plaintext: string, {key, alphabet, autoKey}: Settings) => {
+  encrypt: (plaintext: string, { key, alphabet, autoKey }: Settings) => {
     const alpha = getAlphabet(alphabet)
     const values = {}
     Array.from(alpha.letters).forEach((a, i) => {
@@ -56,7 +56,7 @@ export default {
     return groups(ciphertext, 5).join(' ')
   },
 
-  decrypt: (ciphertext: string, {key, alphabet, autoKey}: Settings) => {
+  decrypt: (ciphertext: string, { key, alphabet, autoKey }: Settings) => {
     const alpha = getAlphabet(alphabet)
     const values = {}
     Array.from(alpha.letters).forEach((a, i) => {
@@ -69,7 +69,7 @@ export default {
     const plaintext = Array.from(ciphertext).map((ciph, index) => {
       const c = values[ciph]
       const k = values[key[index % key.length]]
-      const p = (c - k + letters.length) % letters.length
+      const p = (c - k + alpha.letters.length) % alpha.letters.length
       if (autoKey) {
         key += alpha.letters[p]
       }
@@ -79,26 +79,28 @@ export default {
     return groups(plaintext, 5).join(' ')
   },
 
-  Settings: ({value, onChange, plaintext}: SettingsProps) =>
+  Settings: ({ value, onChange, plaintext }: SettingsProps) => (
     <div>
       <AlphabetSelect
         value={value.alphabet}
-        onChange={alphabet => onChange({alphabet})}
+        onChange={alphabet => onChange({ alphabet })}
       />
       <Input
         label={<FormattedMessage id='vigenere:key' defaultMessage='Key' />}
         placeholder='Keyword'
         value={value.key}
-        onChange={v => onChange({
-          key: textFilter(v, value.alphabet)
-        })}
+        onChange={v =>
+          onChange({
+            key: textFilter(v, value.alphabet)
+          })}
         controlId='vigenere-key'
       />
       <Checkbox
         checked={value.autoKey}
-        onChange={e => onChange({
-          autoKey: e.target.checked
-        })}
+        onChange={e =>
+          onChange({
+            autoKey: e.target.checked
+          })}
       >
         <FormattedMessage
           id='vigenere:autokey'
@@ -106,4 +108,5 @@ export default {
         />
       </Checkbox>
     </div>
+  )
 }

@@ -17,9 +17,9 @@ import { messages, parseLocale } from './locales'
 
 import store from './store'
 
-persistStore(store, {storage: asyncSessionStorage})
+persistStore(store, { storage: asyncSessionStorage })
 
-const App = () =>
+const App = () => (
   <Layout>
     <Switch>
       <Route exact path='/' component={Home} />
@@ -27,6 +27,7 @@ const App = () =>
       <Route path='/:cipher' component={Crypto} />
     </Switch>
   </Layout>
+)
 
 const locale = parseLocale(window.navigator.language)
 

@@ -43,30 +43,35 @@ export default {
     flips: ''
   },
 
-  decrypt: (ciphertext: string, {flips}: Settings) => sort(ciphertext, asNumbers(flips)),
+  decrypt: (ciphertext: string, { flips }: Settings) =>
+    sort(ciphertext, asNumbers(flips)),
 
-  encrypt: (plaintext: string, {flips}: Settings) => sort(plaintext, [...asNumbers(flips)].reverse()),
+  encrypt: (plaintext: string, { flips }: Settings) =>
+    sort(plaintext, [...asNumbers(flips)].reverse()),
 
-  Settings: ({value, onChange, plaintext}: SettingsProps) =>
+  Settings: ({ value, onChange, plaintext }: SettingsProps) => (
     <div>
       <TextBox
         label={messages.key}
         placeholder={messages.keyPlaceholder}
         value={value.flips}
-        onChange={v => onChange({
-          flips: v.replace(/[^0-9]+/g, ' ')
-        })}
+        onChange={v =>
+          onChange({
+            flips: v.replace(/[^0-9]+/g, ' ')
+          })}
         controlId='pancake-key'
       />
       <Button
         bsStyle='primary'
-        onClick={() => onChange({
-          flips: randomKeyNumbers(plaintext).join(' ')
-        })}
+        onClick={() =>
+          onChange({
+            flips: randomKeyNumbers(plaintext).join(' ')
+          })}
       >
         <FormattedMessage {...messages.generate} />
       </Button>
     </div>
+  )
 }
 
 function randomKeyNumbers (plaintext: string) {
@@ -101,14 +106,11 @@ function randomKeyNumbers (plaintext: string) {
 }
 
 const sort = (text: string, numbers: Array<number>) =>
-  numbers.reduce(
-    (s, n) => {
-      const head = s.substr(0, n)
-      const tail = s.substr(n)
-      return `${reverse(head)}${tail}`
-    },
-    withoutWhitespace(text).toLocaleUpperCase()
-  )
+  numbers.reduce((s, n) => {
+    const head = s.substr(0, n)
+    const tail = s.substr(n)
+    return `${reverse(head)}${tail}`
+  }, withoutWhitespace(text).toLocaleUpperCase())
 
 const asNumbers = (text?: string) => {
   const xs = text && text.match(/\d+/g)

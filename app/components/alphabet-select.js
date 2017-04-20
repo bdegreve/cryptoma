@@ -11,13 +11,13 @@ import { alphabets } from 'lib/alphabets'
 
 type Props = {
   value: string,
-  onChange: (string) => void,
+  onChange: string => void,
   size?: number,
   square?: boolean,
   controlId?: string
 }
 
-export default ({value, onChange, size, square, controlId}: Props) =>
+export default ({ value, onChange, size, square, controlId }: Props) => (
   <FormGroup controlId={controlId}>
     <ControlLabel>
       <FormattedMessage id='alphabet:label' defaultMessage='Alphabet' />
@@ -26,10 +26,14 @@ export default ({value, onChange, size, square, controlId}: Props) =>
       componentClass='select'
       placeholder='Select alphabet'
       value={value}
-      onChange={(e) => onChange(e.target.value)}
+      onChange={e => onChange(e.target.value)}
     >
-      {alphabets({size, square}).map(({name, letters, description}) =>
-        <option value={name} key={name}>{`${name}: ${description} - ${letters}`}</option>
-      )}
+      {alphabets({ size, square }).map(({ name, letters, description }) => (
+        <option
+          value={name}
+          key={name}
+        >{`${name}: ${description} - ${letters}`}</option>
+      ))}
     </FormControl>
   </FormGroup>
+)

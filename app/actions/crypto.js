@@ -7,8 +7,8 @@ export type Key = {
 }
 
 export type Action =
-  { type: 'CRYPTO_INPUT', input: string, mode: Mode } |
-  { type: 'CRYPTO_SETTINGS', cipher: string, key: Key }
+  | { type: 'CRYPTO_INPUT', input: string, mode: Mode }
+  | { type: 'CRYPTO_SETTINGS', cipher: string, key: Key }
 
 export const ENCRYPT: Mode = 'encrypt'
 export const DECRYPT: Mode = 'decrypt'

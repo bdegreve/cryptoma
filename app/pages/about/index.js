@@ -10,7 +10,9 @@ import Panel from 'react-bootstrap/lib/Panel'
 export default () => (
   <Grid componentClass='main'>
     <header>
-      <h1><FormattedMessage id='about:title' defaultMessage='About Cryptoma' /></h1>
+      <h1>
+        <FormattedMessage id='about:title' defaultMessage='About Cryptoma' />
+      </h1>
     </header>
     <p>
       <FormattedMessage
@@ -54,7 +56,9 @@ export default () => (
       </p>
     </Panel>
     <footer>
-      <Link to='/'><FormattedMessage id='about:home' defaultMessage='Home' /></Link>
+      <Link to='/'>
+        <FormattedMessage id='about:home' defaultMessage='Home' />
+      </Link>
     </footer>
   </Grid>
 )

@@ -89,15 +89,16 @@ const Crypto = injectIntl(({
           controlId='crypto-ciphertext'
           readOnly={!cipher.decrypt}
         />
-        { Settings
-          ? (
-            <div>
-              <h2>Settings</h2>
-              <Settings value={cipherKey} onChange={onKey} plaintext={plaintext} />
-            </div>
-          )
-          : null
-        }
+        {Settings
+          ? <div>
+            <h2>Settings</h2>
+            <Settings
+              value={cipherKey}
+              onChange={onKey}
+              plaintext={plaintext}
+              />
+          </div>
+          : null}
       </form>
     </Grid>
   )

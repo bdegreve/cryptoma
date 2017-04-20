@@ -4,7 +4,7 @@ type Options = {
   blockSize: number
 }
 
-export function interlace (input: string, {blockSize}: Options) {
+export function interlace (input: string, { blockSize }: Options) {
   let result = []
   if (input.length % 2 !== 0) {
     input = `${input}X`
@@ -26,7 +26,10 @@ export function interlace (input: string, {blockSize}: Options) {
   return result
 }
 
-export function deinterlace (input: string | Array<string>, {blockSize}: Options) {
+export function deinterlace (
+  input: string | Array<string>,
+  { blockSize }: Options
+) {
   input = [...input]
   if (input.length % 2 !== 0) {
     input.push('X')

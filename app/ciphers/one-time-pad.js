@@ -30,7 +30,7 @@ export default {
     modulo: true
   },
 
-  encrypt: (plaintext: string, {otp, modulo}: Settings) => {
+  encrypt: (plaintext: string, { otp, modulo }: Settings) => {
     plaintext = textFilter(plaintext, alphabet)
 
     const { letters } = alphabet
@@ -49,43 +49,48 @@ export default {
     return ciphertext.join(' ')
   },
 
-  Settings: ({value, onChange, plaintext}: SettingsProps) =>
+  Settings: ({ value, onChange, plaintext }: SettingsProps) => (
     <div>
       <TextBox
         label='One time pad'
         placeholder='Random numbers, lots of them ...'
         value={value.otp.join(' ') + ' '}
-        onChange={v => onChange({
-          ...value,
-          otp: numbers(v)
-        })}
+        onChange={v =>
+          onChange({
+            ...value,
+            otp: numbers(v)
+          })}
         controlId='number-station-otp'
       />
-      <Button bsStyle='primary' onClick={() => {
-        const n = plaintext.length
-        const m = alphabet.letters.length
-        const otp = []
-        for (let k = 0; k < n; ++k) {
-          const x = Math.ceil(Math.random() * (m - 1)) + 1
-          otp.push(x)
-        }
-        onChange({
-          ...value,
-          otp
-        })
-      }}
+      <Button
+        bsStyle='primary'
+        onClick={() => {
+          const n = plaintext.length
+          const m = alphabet.letters.length
+          const otp = []
+          for (let k = 0; k < n; ++k) {
+            const x = Math.ceil(Math.random() * (m - 1)) + 1
+            otp.push(x)
+          }
+          onChange({
+            ...value,
+            otp
+          })
+        }}
       >
         Generate OTP
       </Button>
       <Checkbox
         checked={value.modulo}
-        onChange={e => onChange({
-          modulo: e.target.checked
-        })}
+        onChange={e =>
+          onChange({
+            modulo: e.target.checked
+          })}
       >
         Modulo
       </Checkbox>
     </div>
+  )
 }
 
 const numbers = (text: string) => {

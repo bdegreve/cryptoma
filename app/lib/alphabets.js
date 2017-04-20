@@ -9,7 +9,7 @@ type Alphabet = {
   letters: string,
   mapping: { [string]: string },
   square: boolean,
-  filter: (string) => string
+  filter: string => string
 }
 
 type CreateAlphabetOptions = {
@@ -19,9 +19,16 @@ type CreateAlphabetOptions = {
   substitutes?: { [string]: string }
 }
 
-function createAlphabet ({name, description, baseletters, substitutes = {}}: CreateAlphabetOptions): Alphabet {
+function createAlphabet ({
+  name,
+  description,
+  baseletters,
+  substitutes = {}
+}: CreateAlphabetOptions): Alphabet {
   const letters = Object.keys(substitutes).reduce(
-    (res, sub) => res.replace(sub, ''), baseletters)
+    (res, sub) => res.replace(sub, ''),
+    baseletters
+  )
 
   const mapping = { ...substitutes } // make a copy
   Array.from(letters).forEach(letter => {
@@ -44,10 +51,7 @@ function createAlphabet ({name, description, baseletters, substitutes = {}}: Cre
 
 function filter (text: string) {
   text = text.normalize('NFKD').toUpperCase()
-  return Array.from(text)
-    .map(c => this.mapping[c])
-    .filter(_ => _)
-    .join('')
+  return Array.from(text).map(c => this.mapping[c]).filter(_ => _).join('')
 }
 
 export const ALPHABET = createAlphabet({
@@ -66,28 +70,28 @@ export const LATIN_I = createAlphabet({
   name: 'Latin I',
   description: '25 letters, J->I',
   baseletters: AZ,
-  substitutes: {'J': 'I'}
+  substitutes: { J: 'I' }
 })
 
 export const LATIN_V = createAlphabet({
   name: 'Latin V',
   description: '25 letters, U->V',
   baseletters: AZ,
-  substitutes: {'U': 'V'}
+  substitutes: { U: 'V' }
 })
 
 export const TABULA_RECTA = createAlphabet({
   name: 'Tabula Recta',
   description: '24 letters,, J->I U->V',
   baseletters: AZ,
-  substitutes: {'J': 'I', 'U': 'V'}
+  substitutes: { J: 'I', U: 'V' }
 })
 
 export const YS_VRIJ = createAlphabet({
   name: 'Ys-vrij',
   description: '25 letters, Y->IJ',
   baseletters: AZ,
-  substitutes: {'Y': 'IJ'}
+  substitutes: { Y: 'IJ' }
 })
 
 export const ALPHABETS = [
@@ -112,7 +116,7 @@ type AlphabetsOptions = {
   square?: boolean
 }
 
-export const alphabets = ({size = 0, square = false}: AlphabetsOptions) =>
+export const alphabets = ({ size = 0, square = false }: AlphabetsOptions) =>
   ALPHABETS.filter(alphabet => {
     if (size && alphabet.letters.length !== size) {
       return false

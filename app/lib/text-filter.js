@@ -1,3 +1,1 @@
-export default (text, alphabet) => text
-  .toUpperCase()
-  .replace(/[^A-Z]/g, '')
+export default (text, alphabet) => text.toUpperCase().replace(/[^A-Z]/g, '')

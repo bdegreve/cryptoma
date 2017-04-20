@@ -1,3 +1,3 @@
 /* @flow */
 
-export default (str: string) => str ? str.replace(/\s+/g, '') : ''
+export default (str: string) => (str ? str.replace(/\s+/g, '') : '')

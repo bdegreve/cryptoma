@@ -80,10 +80,13 @@ export default {
     spiral: false
   },
 
-  encrypt: (plaintext: string, {blockSize, spiral, ...settings}: Settings) => {
+  encrypt: (
+    plaintext: string,
+    { blockSize, spiral, ...settings }: Settings
+  ) => {
     const alphabet = getAlphabet(settings.alphabet)
-    const key1 = keyBox(settings.key1, {alphabet, spiral: false})
-    const key2 = keyBox(settings.key2, {alphabet, spiral})
+    const key1 = keyBox(settings.key1, { alphabet, spiral: false })
+    const key2 = keyBox(settings.key2, { alphabet, spiral })
 
     const enc = (p1, p2) => {
       let [i1, j1] = coord(p1, key1)
@@ -98,7 +101,7 @@ export default {
     }
 
     plaintext = alphabet.filter(plaintext)
-    const interlaced = interlace(plaintext, {blockSize})
+    const interlaced = interlace(plaintext, { blockSize })
     console.assert(interlaced.length % 2 === 0)
 
     let ciphertext = []
@@ -107,21 +110,24 @@ export default {
       const p2 = interlaced[k + 1]
       let [c1, c2] = enc(p1, p2)
       if (settings.double) {
-        [c1, c2] = enc(c1, c2)
+        ;[c1, c2] = enc(c1, c2)
       }
       ciphertext.push(c1, c2)
     }
 
     if (settings.deinterlace) {
-      ciphertext = deinterlace(ciphertext, {blockSize})
+      ciphertext = deinterlace(ciphertext, { blockSize })
     }
     return groups(ciphertext, 5).join(' ')
   },
 
-  decrypt: (ciphertext: string, {blockSize, spiral, ...settings}: Settings) => {
+  decrypt: (
+    ciphertext: string,
+    { blockSize, spiral, ...settings }: Settings
+  ) => {
     const alphabet = getAlphabet(settings.alphabet)
-    const key1 = keyBox(settings.key1, {alphabet, spiral: false})
-    const key2 = keyBox(settings.key2, {alphabet, spiral})
+    const key1 = keyBox(settings.key1, { alphabet, spiral: false })
+    const key2 = keyBox(settings.key2, { alphabet, spiral })
 
     const dec = (c1, c2) => {
       let [i1, j2] = coord(c1, key2)
@@ -137,86 +143,100 @@ export default {
 
     ciphertext = alphabet.filter(ciphertext)
     if (settings.deinterlace) {
-      ciphertext = interlace(ciphertext, {blockSize}).join('')
+      ciphertext = interlace(ciphertext, { blockSize }).join('')
     }
 
     let interlaced = []
     groups(ciphertext, 2).forEach(([c1, c2]) => {
       let [p1, p2] = dec(c1, c2)
       if (settings.double) {
-        [p1, p2] = dec(p1, p2)
+        ;[p1, p2] = dec(p1, p2)
       }
       interlaced.push(p1, p2)
     })
 
-    const plaintext = deinterlace(interlaced, {blockSize})
+    const plaintext = deinterlace(interlaced, { blockSize })
     return groups(plaintext, blockSize).join('\n')
   },
 
-  Settings: ({value, onChange, plaintext}: SettingsProps) =>
+  Settings: ({ value, onChange, plaintext }: SettingsProps) => (
     <div>
-      <AlphabetSelect size={25}
+      <AlphabetSelect
+        size={25}
         value={value.alphabet}
-        onChange={alphabet => onChange({alphabet})}
+        onChange={alphabet => onChange({ alphabet })}
         controlId='doppel-alphabet'
       />
       <Input
         label={messages.key1}
         placeholder={messages.key1Placeholder}
         value={value.key1}
-        onChange={key1 => onChange({
-          key1: getAlphabet(value.alphabet).filter(key1)
-        })}
+        onChange={key1 =>
+          onChange({
+            key1: getAlphabet(value.alphabet).filter(key1)
+          })}
         controlId='doppel-key1'
       />
       <Input
         label={messages.key2}
         placeholder={messages.key2Placeholder}
         value={value.key2}
-        onChange={key2 => onChange({
-          key2: getAlphabet(value.alphabet).filter(key2)
-        })}
+        onChange={key2 =>
+          onChange({
+            key2: getAlphabet(value.alphabet).filter(key2)
+          })}
         controlId='doppel-key2'
       />
       <NumberSelect
         max={80}
         label={<FormattedMessage {...messages.blockSize} />}
         value={value.blockSize}
-        onChange={blockSize => onChange({blockSize})}
+        onChange={blockSize => onChange({ blockSize })}
         controlId='doppel-blocksize'
       />
       <Checkbox
         checked={value.double}
-        onChange={e => onChange({
-          double: e.target.checked
-        })}
+        onChange={e =>
+          onChange({
+            double: e.target.checked
+          })}
       >
         <FormattedMessage {...messages.double} />
       </Checkbox>
       <Checkbox
         checked={value.deinterlace}
-        onChange={e => onChange({
-          deinterlace: e.target.checked
-        })}
+        onChange={e =>
+          onChange({
+            deinterlace: e.target.checked
+          })}
       >
         <FormattedMessage {...messages.deinterlace} />
       </Checkbox>
       <Checkbox
         checked={value.spiral}
-        onChange={e => onChange({
-          spiral: e.target.checked
-        })}
+        onChange={e =>
+          onChange({
+            spiral: e.target.checked
+          })}
       >
         <FormattedMessage {...messages.spiral} />
       </Checkbox>
       <FormGroup className={styles.keyboxContainer}>
-        <KeyBox box={keyBox(value.key1, {alphabet: value.alphabet, spiral: false})} />
-        <KeyBox box={keyBox(value.key2, {alphabet: value.alphabet, spiral: value.spiral})} />
+        <KeyBox
+          box={keyBox(value.key1, { alphabet: value.alphabet, spiral: false })}
+        />
+        <KeyBox
+          box={keyBox(value.key2, {
+            alphabet: value.alphabet,
+            spiral: value.spiral
+          })}
+        />
       </FormGroup>
     </div>
+  )
 }
 
-const keyBox = (key, {alphabet, spiral}) => {
+const keyBox = (key, { alphabet, spiral }) => {
   if (typeof alphabet !== 'object') {
     alphabet = getAlphabet(alphabet)
   }
@@ -234,28 +254,49 @@ const keyBox = (key, {alphabet, spiral}) => {
   return spiral ? spiralBox(box) : box
 }
 
-const KeyBox = ({box}) =>
+const KeyBox = ({ box }) => (
   <table className={styles.keybox}>
     <tbody>
-      {[0, 5, 10, 15, 20].map(i =>
+      {[0, 5, 10, 15, 20].map(i => (
         <tr key={i}>
           {[0, 1, 2, 3, 4].map(j => <td key={`${i}-${j}`}>{box[i + j]}</td>)}
         </tr>
-      )}
+      ))}
     </tbody>
   </table>
+)
 
-const spiralBox = (array) => {
+const spiralBox = array => {
   console.assert(array.length === _SPIRAL.length)
   return _SPIRAL.map(i => array[i])
 }
 
 const _SPIRAL = [
-  0, 15, 14, 13, 12,
-  1, 16, 23, 22, 11,
-  2, 17, 24, 21, 10,
-  3, 18, 19, 20, 9,
-  4, 5, 6, 7, 8
+  0,
+  15,
+  14,
+  13,
+  12,
+  1,
+  16,
+  23,
+  22,
+  11,
+  2,
+  17,
+  24,
+  21,
+  10,
+  3,
+  18,
+  19,
+  20,
+  9,
+  4,
+  5,
+  6,
+  7,
+  8
 ]
 
 const coord = (c, key) => {

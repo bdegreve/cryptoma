@@ -20,16 +20,16 @@ type Props = {
   children?: Children
 }
 
-export default ({children}: Props) => (
+export default ({ children }: Props) => (
   <div>
     <AppBar brand='Cryptoma'>
       <Nav>
         <NavDropdown eventKey={3} title='Ciphers' id='basic-nav-dropdown'>
-          {Object.keys(CIPHERS).map(cipher =>
+          {Object.keys(CIPHERS).map(cipher => (
             <MenuLink key={cipher} to={`/${cipher}`}>
               {CIPHERS[cipher].name || cipher}
             </MenuLink>
-          )}
+          ))}
         </NavDropdown>
       </Nav>
       <Nav pullRight>
