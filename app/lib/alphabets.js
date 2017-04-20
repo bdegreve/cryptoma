@@ -82,9 +82,9 @@ export const LATIN_V = createAlphabet({
 
 export const TABULA_RECTA = createAlphabet({
   name: 'Tabula Recta',
-  description: '24 letters,, J->I U->V',
-  baseletters: AZ,
-  substitutes: { J: 'I', U: 'V' }
+  description: '24 letters, J->I, V->U',
+  baseletters: 'ABCDEFGHIKLMNOPQRSTUXYZW',
+  substitutes: { J: 'I', V: 'U' }
 })
 
 export const YS_VRIJ = createAlphabet({
