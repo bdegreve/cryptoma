@@ -5,12 +5,15 @@ import { FormattedMessage, defineMessages } from 'react-intl'
 
 import Checkbox from 'react-bootstrap/lib/Checkbox'
 import FormGroup from 'react-bootstrap/lib/FormGroup'
+import ButtonGroup from 'react-bootstrap/lib/ButtonGroup'
+import ControlLabel from 'react-bootstrap/lib/ControlLabel'
+import Button from 'react-bootstrap/lib/Button'
 
 import Input from 'components/input'
 import AlphabetSelect from 'components/alphabet-select'
 import NumberSelect from 'components/number-select'
 
-import { LATIN_I, alphabet as getAlphabet } from 'lib/alphabets'
+import { LATIN_I, YS_VRIJ, alphabet as getAlphabet } from 'lib/alphabets'
 import groups from 'lib/groups'
 import { interlace, deinterlace } from 'lib/interlace'
 
@@ -48,6 +51,14 @@ const messages = defineMessages({
   spiral: {
     id: 'doppel:spiral',
     defaultMessage: 'Use spiral box for key 2'
+  },
+  presets: {
+    id: 'doppel:presets',
+    defaultMessage: 'Presets'
+  },
+  historical: {
+    id: 'doppel:historical',
+    defaultMessage: 'Historical'
   }
 })
 
@@ -161,6 +172,20 @@ export default {
 
   Settings: ({ value, onChange, plaintext }: SettingsProps) => (
     <div>
+      <FormGroup>
+        <ControlLabel><FormattedMessage {...messages.presets} />:</ControlLabel>
+        <ButtonGroup >
+          <Button bsStyle='link' onClick={() => onChange(HISTORIC_SETTINGS)}>
+            <FormattedMessage {...messages.historical} />
+          </Button>
+          <Button bsStyle='link' onClick={() => onChange(JOEPIE_SETTINGS)}>
+            Joepie 27
+          </Button>
+          <Button bsStyle='link' onClick={() => onChange(NOVA_SETTINGS)}>
+            Nova
+          </Button>
+        </ButtonGroup >
+      </FormGroup>
       <AlphabetSelect
         size={25}
         value={value.alphabet}
@@ -234,6 +259,36 @@ export default {
       </FormGroup>
     </div>
   )
+}
+
+export const HISTORIC_SETTINGS: Settings = {
+  alphabet: LATIN_I.name,
+  key1: 'KXNZYEMOBPLQFVIRAWGUHSCDT',
+  key2: 'GSAORVFHZWBNYCQUIEMXKLDPT',
+  blockSize: 21,
+  deinterlace: true,
+  double: true,
+  spiral: false
+}
+
+export const JOEPIE_SETTINGS: Settings = {
+  alphabet: YS_VRIJ.name,
+  key1: 'ROBIN',
+  key2: 'JOKER',
+  blockSize: 7,
+  deinterlace: false,
+  double: false,
+  spiral: false
+}
+
+export const NOVA_SETTINGS: Settings = {
+  alphabet: LATIN_I.name,
+  key1: 'HAMBURG',
+  key2: 'NEWYORK',
+  blockSize: 7,
+  deinterlace: false,
+  double: true,
+  spiral: true
 }
 
 const keyBox = (key, { alphabet, spiral }) => {

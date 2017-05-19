@@ -1,47 +1,34 @@
 /* eslint-env jest */
 
 const { encrypt, decrypt } = require('ciphers/doppelkastenschlussel').default
-const { LATIN_I, YS_VRIJ } = require('lib/alphabets')
+const {
+  HISTORIC_SETTINGS,
+  JOEPIE_SETTINGS,
+  NOVA_SETTINGS
+} = require('ciphers/doppelkastenschlussel')
+const { YS_VRIJ } = require('lib/alphabets')
 
 describe('Doppelkastenschlüssel', () => {
   test('MY HOVERCRAFT IS FULL OF EELS', () => {
-    const settings = {
-      alphabet: LATIN_I.name,
-      key1: 'HAMBURG',
-      key2: 'NEWYORK',
-      blockSize: 7,
-      deinterlace: false,
-      double: true,
-      spiral: true
-    }
-    expect(encrypt('MY HOVERCRAFT IS FULL OF EELS', settings)).toBe(
+    expect(encrypt('MY HOVERCRAFT IS FULL OF EELS', NOVA_SETTINGS)).toBe(
       'MPSRH RMXNW AKBWM YWEBI CWSP'
     )
-    expect(decrypt('MPSRH RMXNW AKBWM YWEBI CWSP', settings)).toBe(
+    expect(decrypt('MPSRH RMXNW AKBWM YWEBI CWSP', NOVA_SETTINGS)).toBe(
       'MYHOVER\nCRAFTIS\nFULLOFE\nELS'
     )
   })
 
   test('Iq weiss niqt was soll es bedeuten dass iq so traurig bin', () => {
-    const settings = {
-      alphabet: LATIN_I.name,
-      key1: 'KXNZYEMOBPLQFVIRAWGUHSCDT',
-      key2: 'GSAORVFHZWBNYCQUIEMXKLDPT',
-      blockSize: 21,
-      deinterlace: true,
-      double: true,
-      spiral: false
-    }
     expect(
       encrypt(
         'Iq weiss niqt was soll es bedeuten dass iq so traurig bin',
-        settings
+        HISTORIC_SETTINGS
       )
     ).toBe('GGYQQ DCMAR NERQW MBGQT BUZYZ SZIQI WIYQR UFSTZ UNXBP O')
     expect(
       decrypt(
         'GGYQQ DCMAR NERQW MBGQT BUZYZ SZIQI WIYQR UFSTZ UNXBP O',
-        settings
+        HISTORIC_SETTINGS
       )
     ).toBe('IQWEISSNIQTWASSOLLESB\nEDEUTENDASSIQSOTRAURI\nGBIN')
   })
@@ -64,20 +51,11 @@ describe('Doppelkastenschlüssel', () => {
     ).toBe('DITISEE\nNIETSLA\nNGEREGE\nHEIMEBO\nODSCHAP\nX')
   })
 
-  test('dit is een iets langere geheime boodschap', () => {
-    const settings = {
-      alphabet: YS_VRIJ.name,
-      key1: 'ROBIN',
-      key2: 'JOKER',
-      blockSize: 7,
-      deinterlace: false,
-      double: false,
-      spiral: false
-    }
+  test('Voorbij huisnummer zeventien', () => {
     expect(
       encrypt(
         'Voorbij huisnummer zeventien ga je rechtdoor het wandelpad in via het hekje.',
-        settings
+        JOEPIE_SETTINGS
       )
     ).toBe(
       'VHJVK HEMJQ JXLHT TFSKG XNASU HFDLD BIJNF IBHLO SSUDC FKLAQ BXHKN CLOCI NNLO'
@@ -85,7 +63,7 @@ describe('Doppelkastenschlüssel', () => {
     expect(
       decrypt(
         'VHJVKHEMJQJXLHTTFSKGXNASUHFDLDBIJNFIBHLOSSUDCFKLAQBXHKNCLOCINNLO',
-        settings
+        JOEPIE_SETTINGS
       )
     ).toBe(
       'VOORBIJ\nHUISNUM\nMERZEVE\nNTIENGA\nJERECHT\nDOORHET\nWANDELP\nADINVIA\nHETHEKJ\nE'
