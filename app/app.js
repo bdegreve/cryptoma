@@ -31,13 +31,16 @@ const App = () => (
 
 const locale = parseLocale(window.navigator.language)
 
-ReactDOM.render(
-  <IntlProvider locale={locale} defaultLocale='en' messages={messages[locale]}>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </IntlProvider>,
-  document.getElementById('content')
-)
+const content = document.getElementById('content')
+if (content) {
+  ReactDOM.render(
+    <IntlProvider locale={locale} defaultLocale='en' messages={messages[locale]}>
+      <Provider store={store}>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </Provider>
+    </IntlProvider>,
+    content
+  )
+}

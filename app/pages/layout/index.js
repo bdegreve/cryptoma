@@ -14,10 +14,10 @@ import CIPHERS from 'ciphers'
 
 import style from './style.less'
 
-import type { Children } from 'react'
+import type { Node } from 'react'
 
 type Props = {
-  children?: Children
+  children?: Node
 }
 
 export default ({ children }: Props) => (

@@ -96,7 +96,7 @@ const Crypto = injectIntl(({
               value={cipherKey}
               onChange={onKey}
               plaintext={plaintext}
-              />
+            />
           </div>
           : null}
       </form>

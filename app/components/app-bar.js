@@ -5,11 +5,11 @@ import {Link} from 'react-router-dom'
 
 import Navbar from 'react-bootstrap/lib/Navbar'
 
-import type { Children } from 'react'
+import type { Node } from 'react'
 
 type Props = {
   brand: string,
-  children?: Children
+  children?: Node
 }
 
 export default ({brand, children}: Props) => {
