@@ -24,7 +24,7 @@ node_modules: package.json yarn.lock
 translations:
 	npm run translations
 
-check:
+check: node_modules
 	npm test
 
 clean:
