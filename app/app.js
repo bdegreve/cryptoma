@@ -12,6 +12,7 @@ import Layout from 'pages/layout'
 import Home from 'pages/home'
 import About from 'pages/about'
 import Crypto from 'pages/crypto'
+import Loader from 'components/loader'
 
 import { messages, parseLocale } from './locales'
 
@@ -40,10 +41,10 @@ if (content) {
       messages={messages[locale]}
     >
       <Provider store={store}>
-        <PersistGate loader={null} persistor={persistor}>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <PersistGate loader={Loader} persistor={persistor}>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </PersistGate>
       </Provider>
     </IntlProvider>,
