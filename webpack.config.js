@@ -101,7 +101,17 @@ module.exports = {
           use: [
             ...cssLoaders,
             {
-              loader: 'less-loader'
+              loader: 'less-loader',
+              options: {
+                // hack for less-loader 4.0 that now uses webpack's loaders
+                // by default, and thus can't cope with @import url(https://...)
+                // Specifying paths option forces it back to less' original
+                // loaders
+                paths: [
+                  path.resolve(__dirname, './app'),
+                  path.resolve(__dirname, 'node_modules')
+                ]
+              }
             }
           ]
         })
