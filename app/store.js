@@ -1,9 +1,15 @@
 /* @flow */
 
-import { compose, createStore } from 'redux'
-import { autoRehydrate } from 'redux-persist'
+import { createStore } from 'redux'
+import { persistReducer } from 'redux-persist'
+import storage from 'redux-persist/lib/storage' // defaults to localStorage for web and AsyncStorage for react-native
 
 import rootReducer from './reducers'
+
+const persistedReducer = persistReducer(
+  { key: 'cryptoma', storage },
+  rootReducer
+)
 
 function getInitialState () {
   if (typeof document === 'undefined') {
@@ -18,7 +24,9 @@ function getInitialState () {
 
 const initialState = getInitialState()
 
-// http://extension.remotedev.io
-const _compose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
-
-export default createStore(rootReducer, initialState, _compose(autoRehydrate()))
+export default createStore(
+  persistedReducer,
+  initialState,
+  // http://extension.remotedev.io
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
