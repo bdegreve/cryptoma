@@ -1,4 +1,5 @@
 const path = require('path')
+const childProcess = require('child_process')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -14,7 +15,8 @@ const plugins = [
     minimize: !DEBUG
   }),
   new webpack.DefinePlugin({
-    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    'process.env.GIT_REVISION': JSON.stringify(revision())
   }),
   new ExtractTextPlugin(`[name]${CHUNKHASH}.css`),
   new HtmlWebpackPlugin({
@@ -138,4 +140,14 @@ module.exports = {
       'web_modules' // because https://github.com/webpack/webpack-dev-server/issues/60
     ]
   }
+}
+
+function revision () {
+  return childProcess.execFileSync(
+    'git',
+    ['rev-parse', '--short=10', '--verify', 'HEAD'],
+    {
+      encoding: 'utf8'
+    }
+  )
 }

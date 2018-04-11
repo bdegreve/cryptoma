@@ -1,5 +1,5 @@
 {
-  "about:github": "Volledige broncode is beschikbaar op {github}.",
+  "about:github": "Volledige broncode is beschikbaar op {github}, revisie {revision}",
   "about:home": "Start",
   "about:text": "Deze tool werd speciaal gemaakt voor het vercijferen van delen uit de tochtbeschrijving van {joepie}, tocht C.",
   "about:title": "Over Cryptoma",
