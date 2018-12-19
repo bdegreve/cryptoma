@@ -29,7 +29,8 @@ describe('Pancake', () => {
 
   test('comma flips', () => {
     const settings = {
-      flips: '4, 8, 3, 9, 10, 17, 13, 14, 17, 10, 3, 7, 8, 4, 14, 3, 17, 7, 15, 7, 13, 11, 5, 7'
+      flips:
+        '4, 8, 3, 9, 10, 17, 13, 14, 17, 10, 3, 7, 8, 4, 14, 3, 17, 7, 15, 7, 13, 11, 5, 7'
     }
     expect(encrypt('Dit is een boodschap', settings)).toBe('DSICTIHDOSOEPAEBN')
     expect(decrypt('DSICTIHDOSOEPAEBN', settings)).toBe('DITISEENBOODSCHAP')

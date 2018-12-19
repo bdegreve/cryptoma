@@ -63,7 +63,7 @@ module.exports = {
   context: __dirname,
   entry: {
     main: [
-      'babel-polyfill',
+      '@babel/polyfill',
       './app/app.less',
       './app/app.js' // must be last for static-site-generator-webpack-plugin
     ]

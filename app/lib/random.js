@@ -1,9 +1,10 @@
 /* @flow */
 /* global Generator */
 
-const crypto = typeof window !== 'undefined'
-  ? window.crypto || window.msCrypto || undefined
-  : undefined
+const crypto =
+  typeof window !== 'undefined'
+    ? window.crypto || window.msCrypto || undefined
+    : undefined
 
 const N = 4294967296 // 2 ** 32
 

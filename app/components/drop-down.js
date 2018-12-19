@@ -24,7 +24,9 @@ export default ({ value, onChange, options, label, controlId }: Props) => (
       onChange={e => onChange(e.target.value)}
     >
       {options.map(option => (
-        <option value={option} key={option}>{option}</option>
+        <option value={option} key={option}>
+          {option}
+        </option>
       ))}
     </FormControl>
   </FormGroup>

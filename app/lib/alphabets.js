@@ -51,7 +51,10 @@ function createAlphabet ({
 
 function filter (text: string) {
   text = text.normalize('NFKD').toUpperCase()
-  return Array.from(text).map(c => this.mapping[c]).filter(_ => _).join('')
+  return Array.from(text)
+    .map(c => this.mapping[c])
+    .filter(_ => _)
+    .join('')
 }
 
 export const ALPHABET = createAlphabet({
