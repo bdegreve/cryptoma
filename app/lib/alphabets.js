@@ -97,7 +97,7 @@ export const YS_VRIJ = createAlphabet({
   substitutes: { Y: 'IJ' }
 })
 
-export const ALPHABETS = [
+export const ALPHABETS: Alphabet[] = [
   ALPHABET,
   ALPHANUM,
   LATIN_I,
@@ -119,7 +119,10 @@ type AlphabetsOptions = {
   square?: boolean
 }
 
-export const alphabets = ({ size = 0, square = false }: AlphabetsOptions) =>
+export const alphabets = ({
+  size = 0,
+  square = false
+}: AlphabetsOptions): Alphabet[] =>
   ALPHABETS.filter(alphabet => {
     if (size && alphabet.letters.length !== size) {
       return false
