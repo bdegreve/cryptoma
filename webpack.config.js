@@ -2,7 +2,7 @@ const path = require('path')
 const childProcess = require('child_process')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const DEBUG = process.env.NODE_ENV !== 'production'
@@ -18,23 +18,17 @@ const plugins = [
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     'process.env.GIT_REVISION': JSON.stringify(revision())
   }),
-  new ExtractTextPlugin(`[name]${CHUNKHASH}.css`),
+  new MiniCssExtractPlugin({
+    filename: `[name]${CHUNKHASH}.css`,
+    chunkFilename: `[id]${CHUNKHASH}.css`
+  }),
   new HtmlWebpackPlugin({
     template: path.resolve(__dirname, 'app/index.html')
   })
 ]
-if (!DEBUG) {
-  plugins.push(
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: true,
-      compress: {
-        warnings: false // too many warnings are worse than none.
-      }
-    })
-  )
-}
 
 const cssLoaders = [
+  DEBUG ? 'style-loader' : MiniCssExtractPlugin.loader,
   {
     loader: 'css-loader',
     options: {
@@ -43,7 +37,7 @@ const cssLoaders = [
       // ?importLoaders=1 seems not required for now.
       // https://css-tricks.com/css-modules-part-3-react/
       // https://github.com/css-modules/css-modules
-      modules: false,
+      modules: 'global',
       localIdentName: '[local]_[hash:base64:5]'
     }
   },
@@ -60,6 +54,7 @@ const cssLoaders = [
 ]
 
 module.exports = {
+  mode: DEBUG ? 'development' : 'production',
   context: __dirname,
   entry: {
     main: [
@@ -91,32 +86,26 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: cssLoaders
-        })
+        use: cssLoaders
       },
       {
         test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: [
-            ...cssLoaders,
-            {
-              loader: 'less-loader',
-              options: {
-                // hack for less-loader 4.0 that now uses webpack's loaders
-                // by default, and thus can't cope with @import url(https://...)
-                // Specifying paths option forces it back to less' original
-                // loaders
-                paths: [
-                  path.resolve(__dirname, './app'),
-                  path.resolve(__dirname, 'node_modules')
-                ]
-              }
+        use: [
+          ...cssLoaders,
+          {
+            loader: 'less-loader',
+            options: {
+              // hack for less-loader 4.0 that now uses webpack's loaders
+              // by default, and thus can't cope with @import url(https://...)
+              // Specifying paths option forces it back to less' original
+              // loaders
+              paths: [
+                path.resolve(__dirname, './app'),
+                path.resolve(__dirname, 'node_modules')
+              ]
             }
-          ]
-        })
+          }
+        ]
       },
       {
         test: /\.(png|jpg|jpeg|eot|woff|woff2|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/,
