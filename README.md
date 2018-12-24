@@ -16,7 +16,7 @@ ISC, see [LICENSE](./LICENSE) file.
 
 ## Requirements
 
-  - Node.js (v6.x LTS recommended) and NPM (v3.x recommended). Various download
+  - Node.js (v10.x LTS recommended) and NPM (v6.x recommended). Various download
     options are available at [nodejs.org](https://nodejs.org/en/download/),
     including instructions using [package managers](https://nodejs.org/en/download/package-manager/).
   - Optional: [Yarn](https://yarnpkg.com/en/docs/install) to install the dependencies.
