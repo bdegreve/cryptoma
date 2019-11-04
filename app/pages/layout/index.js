@@ -38,8 +38,6 @@ export default ({ children }: Props) => (
         </NavLink>
       </Nav>
     </AppBar>
-    <div className={style.main}>
-      {children}
-    </div>
+    <div className={style.main}>{children}</div>
   </div>
 )

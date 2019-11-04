@@ -12,13 +12,13 @@ export default () => (
   <main>
     <header className='jumbotron'>
       <div className='container'>
-        <h1><FormattedMessage id='home:ciphers' defaultMessage='Ciphers' /></h1>
+        <h1>
+          <FormattedMessage id='home:ciphers' defaultMessage='Ciphers' />
+        </h1>
         <ul>
           {Object.keys(CIPHERS).map(cipher => (
             <li key={cipher}>
-              <Link to={`/${cipher}`}>
-                {CIPHERS[cipher].name || cipher}
-              </Link>
+              <Link to={`/${cipher}`}>{CIPHERS[cipher].name || cipher}</Link>
             </li>
           ))}
         </ul>

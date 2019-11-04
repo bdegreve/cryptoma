@@ -46,9 +46,7 @@ const cssLoaders = [
   {
     loader: 'postcss-loader',
     options: {
-      plugins: () => [
-        autoprefixer()
-      ]
+      plugins: () => [autoprefixer()]
     }
   }
 ]
@@ -131,7 +129,7 @@ module.exports = {
   }
 }
 
-function revision() {
+function revision () {
   return childProcess.execFileSync(
     'git',
     ['rev-parse', '--short=10', '--verify', 'HEAD'],

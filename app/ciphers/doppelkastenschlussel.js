@@ -173,7 +173,9 @@ export default {
   Settings: ({ value, onChange, plaintext }: SettingsProps) => (
     <div>
       <FormGroup>
-        <ControlLabel><FormattedMessage {...messages.presets} />:</ControlLabel>
+        <ControlLabel>
+          <FormattedMessage {...messages.presets} />:
+        </ControlLabel>
         <ButtonGroup>
           <Button bsStyle='link' onClick={() => onChange(HISTORIC_SETTINGS)}>
             <FormattedMessage {...messages.historical} />
@@ -314,7 +316,9 @@ const KeyBox = ({ box }) => (
     <tbody>
       {[0, 5, 10, 15, 20].map(i => (
         <tr key={i}>
-          {[0, 1, 2, 3, 4].map(j => <td key={`${i}-${j}`}>{box[i + j]}</td>)}
+          {[0, 1, 2, 3, 4].map(j => (
+            <td key={`${i}-${j}`}>{box[i + j]}</td>
+          ))}
         </tr>
       ))}
     </tbody>

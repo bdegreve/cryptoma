@@ -29,10 +29,8 @@ export default ({ value, onChange, size, square, controlId }: Props) => (
       onChange={e => onChange(e.target.value)}
     >
       {alphabets({ size, square }).map(({ name, letters, description }) => (
-        <option
-          value={name}
-          key={name}
-        >{`${name}: ${description} - ${letters}`}
+        <option value={name} key={name}>
+          {`${name}: ${description} - ${letters}`}
         </option>
       ))}
     </FormControl>
