@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { connect } from 'react-redux'
-import { defineMessages, injectIntl } from 'react-intl'
+import { defineMessages, useIntl } from 'react-intl'
 
 import Grid from 'react-bootstrap/lib/Grid'
 
@@ -42,7 +42,7 @@ const messages = defineMessages({
   }
 })
 
-const Crypto = injectIntl(({
+const Crypto = ({
   input,
   mode,
   cipherId,
@@ -50,9 +50,9 @@ const Crypto = injectIntl(({
   cipherKey,
   onEncrypt,
   onDecrypt,
-  onKey,
-  intl
+  onKey
 }) => {
+  const intl = useIntl()
   if (!cipher) {
     return <p>{cipherId} not found</p>
   }
@@ -89,22 +89,20 @@ const Crypto = injectIntl(({
           controlId='crypto-ciphertext'
           readOnly={!cipher.decrypt}
         />
-        {Settings
-          ? (
-            <div>
-              <h2>Settings</h2>
-              <Settings
-                value={cipherKey}
-                onChange={onKey}
-                plaintext={plaintext}
-              />
-            </div>
-          )
-          : null}
+        {Settings ? (
+          <div>
+            <h2>Settings</h2>
+            <Settings
+              value={cipherKey}
+              onChange={onKey}
+              plaintext={plaintext}
+            />
+          </div>
+        ) : null}
       </form>
     </Grid>
   )
-})
+}
 
 const mapStateToProps = (state, props) => {
   const { mode, input, keys } = state.crypto
@@ -124,4 +122,7 @@ const mapDispatchToProps = (dispatch, props) => ({
   onKey: key => dispatch(setKey(props.match.params.cipher, key))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Crypto)
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Crypto)
