@@ -1,6 +1,6 @@
 {
   "name": "cryptoma",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "crypto tool",
   "main": "webpack.config.js",
   "scripts": {
