@@ -5,7 +5,7 @@ export default (input: string | Array<string>, size: number = 5) => {
     input = input.join('')
   }
   size = parseInt(size)
-  let groups = []
+  const groups = []
   for (let k = 0; k < input.length; k += size) {
     groups.push(input.substr(k, size))
   }

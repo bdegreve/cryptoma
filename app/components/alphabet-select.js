@@ -32,7 +32,8 @@ export default ({ value, onChange, size, square, controlId }: Props) => (
         <option
           value={name}
           key={name}
-        >{`${name}: ${description} - ${letters}`}</option>
+        >{`${name}: ${description} - ${letters}`}
+        </option>
       ))}
     </FormControl>
   </FormGroup>

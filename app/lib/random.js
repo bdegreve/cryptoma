@@ -13,7 +13,7 @@ export const hasCrypto = !!crypto
 // generates random numbers in range [0, 1), 1 not included.
 export function * randomFloats (): Generator<number, void, void> {
   if (crypto) {
-    let xs = new Uint32Array(16)
+    const xs = new Uint32Array(16)
     let k = xs.length
     while (true) {
       if (k === xs.length) {
@@ -33,7 +33,7 @@ export function * randomFloats (): Generator<number, void, void> {
 export function * randomIntegers (n: number): Generator<number, void, void> {
   if (crypto) {
     const Nprime = Math.floor(N / n) * n
-    let xs = new Uint32Array(16)
+    const xs = new Uint32Array(16)
     let k = xs.length
     while (true) {
       if (k === xs.length) {

@@ -5,7 +5,7 @@ type Options = {
 }
 
 export function interlace (input: string, { blockSize }: Options) {
-  let result = []
+  const result = []
   if (input.length % 2 !== 0) {
     input = `${input}X`
   }
@@ -35,7 +35,7 @@ export function deinterlace (
     input.push('X')
   }
 
-  let result = []
+  const result = []
   let block1 = []
   let block2 = []
   for (let k = 0; k < input.length; k += 2) {

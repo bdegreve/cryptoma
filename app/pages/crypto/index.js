@@ -90,14 +90,16 @@ const Crypto = injectIntl(({
           readOnly={!cipher.decrypt}
         />
         {Settings
-          ? <div>
-            <h2>Settings</h2>
-            <Settings
-              value={cipherKey}
-              onChange={onKey}
-              plaintext={plaintext}
-            />
-          </div>
+          ? (
+            <div>
+              <h2>Settings</h2>
+              <Settings
+                value={cipherKey}
+                onChange={onKey}
+                plaintext={plaintext}
+              />
+            </div>
+          )
           : null}
       </form>
     </Grid>

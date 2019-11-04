@@ -157,7 +157,7 @@ export default {
       ciphertext = interlace(ciphertext, { blockSize }).join('')
     }
 
-    let interlaced = []
+    const interlaced = []
     groups(ciphertext, 2).forEach(([c1, c2]) => {
       let [p1, p2] = dec(c1, c2)
       if (settings.double) {
@@ -174,7 +174,7 @@ export default {
     <div>
       <FormGroup>
         <ControlLabel><FormattedMessage {...messages.presets} />:</ControlLabel>
-        <ButtonGroup >
+        <ButtonGroup>
           <Button bsStyle='link' onClick={() => onChange(HISTORIC_SETTINGS)}>
             <FormattedMessage {...messages.historical} />
           </Button>
@@ -184,7 +184,7 @@ export default {
           <Button bsStyle='link' onClick={() => onChange(NOVA_SETTINGS)}>
             Nova
           </Button>
-        </ButtonGroup >
+        </ButtonGroup>
       </FormGroup>
       <AlphabetSelect
         size={25}

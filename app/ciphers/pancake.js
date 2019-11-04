@@ -78,7 +78,7 @@ function randomKeyNumbers (plaintext: string) {
   const n = withoutWhitespace(plaintext).length
 
   // generate n integers in range [2, n]
-  let numbers = []
+  const numbers = []
   const rng = randomFloats()
   while (numbers.length < n) {
     const x = rng.next().value
