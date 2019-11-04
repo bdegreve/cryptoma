@@ -72,11 +72,11 @@
   },
   "devDependencies": {
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^25.0.0",
     "connect-history-api-fallback": "^1.5.0",
     "express": "^4.16.4",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^23.6.0",
+    "jest": "^25.0.0",
     "react-intl-translations-manager": "^5.0.3",
     "webpack-dev-middleware": "^3.4.0"
   }
