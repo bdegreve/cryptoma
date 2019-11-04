@@ -18,8 +18,8 @@ run: node_modules
 dist: node_modules webpack.config.js .babelrc $(SOURCES)
 	npm run dist
 
-node_modules: package.json yarn.lock
-	yarn install
+node_modules: package.json package-lock.json
+	npm install
 
 translations:
 	npm run translations
