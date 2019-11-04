@@ -37,8 +37,10 @@ const cssLoaders = [
       // ?importLoaders=1 seems not required for now.
       // https://css-tricks.com/css-modules-part-3-react/
       // https://github.com/css-modules/css-modules
-      modules: 'global',
-      localIdentName: '[local]_[hash:base64:5]'
+      modules: {
+        mode: 'global',
+        localIdentName: '[local]_[hash:base64:5]'
+      }
     }
   },
   {
@@ -129,7 +131,7 @@ module.exports = {
   }
 }
 
-function revision () {
+function revision() {
   return childProcess.execFileSync(
     'git',
     ['rev-parse', '--short=10', '--verify', 'HEAD'],
