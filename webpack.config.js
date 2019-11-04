@@ -45,9 +45,7 @@ const cssLoaders = [
     loader: 'postcss-loader',
     options: {
       plugins: () => [
-        autoprefixer({
-          browsers: ['last 3 versions', '> 1%']
-        })
+        autoprefixer()
       ]
     }
   }
